@@ -1,0 +1,26 @@
+{include file='inc_head.txt' title='All Issues'}
+
+<table class="listtable" width="100%">
+	<tr>
+		<th>ID</th>
+		<th>Assigned</th>
+		<th>Title</th>
+		<th>Age</th>
+		<th>Updated</th>
+	</tr>
+{foreach from=$bugs item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td><a href="{$cfg.root_url}bug.php?id={$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td><a href="{$cfg.root_url}bug.php?id={$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
+{if $row.age==1}
+		<td>1 day</td>
+{else}
+		<td>{$row.age} days</td>
+{/if}
+		<td>{$row.date_modified|dateify}</td>
+	</tr>
+{/foreach}
+</table>
+
+{include file='inc_foot.txt'}

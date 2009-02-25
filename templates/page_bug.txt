@@ -1,0 +1,213 @@
+{capture assign='title'}#{$bug.id}: {$bug.title|escape|default:'Untitled'}{/capture}
+{include file='inc_head.txt' title=$title}
+
+<script>{literal}
+
+function show_form(assign, status, title, set_status){
+	document.getElementById('editform').style.display = 'none';
+
+	document.getElementById('use-assign').value = assign;
+	document.getElementById('editrow-assign').style.display = get_tr_display(assign);
+
+	document.getElementById('use-status').value = status;
+	document.getElementById('editrow-status').style.display = get_tr_display(status);
+
+	document.getElementById('use-title').value = title;
+	document.getElementById('editrow-title').style.display = get_tr_display(title);
+
+	if (set_status){
+		var elm = document.getElementById('value-status');
+		for (var i=0; i<elm.options.length; i++){
+			if (elm.options[i].value == set_status){
+				elm.selectedIndex = i;
+				break;
+			}
+		}
+	}
+
+	show_resolution();
+	document.getElementById('editform').style.display = 'block';
+	window.setTimeout("document.getElementById('editnote').focus();", 0);
+}
+
+function show_resolution(){
+
+	var elm = document.getElementById('value-status');
+	var val = elm.options[elm.selectedIndex].value;
+
+	var dis = document.getElementById('editrow-status').style.display;
+
+	var show_resolution = val=='resolved' ? (dis == 'none' ? 0 : 1) : 0;
+
+	document.getElementById('use-resolution').value = show_resolution;
+	document.getElementById('editrow-resolution').style.display = get_tr_display(show_resolution);
+}
+
+</script>{/literal}
+
+<form action="{$cfg.root_url}bug.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="MAX_FILE_SIZE" value="{$max_attach_bytes}">
+<input type="hidden" name="done" value="1" />
+<input type="hidden" name="id" value="{$bug.id}" />
+
+<input type="hidden" name="use-status"     id="use-status"     value="0" />
+<input type="hidden" name="use-resolution" id="use-resolution" value="0" />
+<input type="hidden" name="use-assign"     id="use-assign"     value="0" />
+<input type="hidden" name="use-title"      id="use-title"      value="0" />
+
+
+<div class="bug">
+	<div class="bughead">
+{capture assign="buttons"}
+		<a href="#bugform" class="button" onclick="show_form(0,0,0);">Add Note</a>
+{if $bug.status=='open'}
+		<a href="#bugform" class="button" onclick="show_form(1,0,0);">Assign</a>
+		<a href="#bugform" class="button" onclick="show_form(0,0,1);">Edit</a>
+		<a href="#bugform" class="button" onclick="show_form(0,1,0,'resolved');">Resolve</a>
+{/if}
+{if $bug.status!='open'}
+		<a href="#bugform" class="button" onclick="show_form(0,1,0,'open');">Reopen</a>
+{/if}
+{if $bug.status=='resolved'}
+		<a href="#bugform" class="button" onclick="show_form(0,1,0,'closed');">Close</a>
+{/if}
+{/capture}
+		{$buttons}
+	</div>
+	<div class="bugdetails">
+
+		<table>
+			<tr>
+				<td class="spacey">Status:</td>
+				<td class="spacey">
+{assign var='res_key' value=$bug.resolution}
+					{if $bug.status=='open'}Open{/if}
+					{if $bug.status=='resolved'}Resolved ({$cfg.resolutions.$res_key}){/if}
+					{if $bug.status=='closed'}Closed ({$cfg.resolutions.$res_key}){/if}
+				</td>
+			</tr>
+			<tr>
+				<td class="spacey">Reported By:</td>
+				<td class="spacey">{$bug.opened_user|escape}</td>
+			</tr>
+			<tr>
+				<td class="spacey">Assigned To:</td>
+				<td class="spacey">{$bug.assigned_user|escape}</td>
+			</tr>
+		</table>
+
+	</div>
+	<div class="bugitems">
+
+		<div class="bugitem">
+			<span class="itemtitle">Opened by {$bug.opened_user}</span>
+			<span class="itemdate">{$bug.date_create|dateify}</span>
+		</div>
+
+{foreach from=$notes item='row'}
+{if $row.type_id == 'note'}
+{if $row.note|strlen}
+		<div class="bugitem">
+			<span class="itemtitle">Note added by {$row.user}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+			<div class="bugitemtext">
+				{$row.note|escape|nl2br}
+			</div>
+		</div>
+{/if}
+{if $row.attachment}
+		<div class="bugitem">
+			<span class="itemtitle">File attached by {$row.user}: <a href="{$cfg.root_url}attachments/{$row.attachment|escape}">{$row.attachment|escape}</a></span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+		</div>
+{/if}
+{elseif $row.type_id == 'status'}
+		<div class="bugitem">
+			<span class="itemtitle">Status set to {$row.new_value} by {$row.user}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+			<span class="itemdate">- old status was {$row.old_value}</span>
+		</div>
+{elseif $row.type_id == 'resolution'}
+		<div class="bugitem">
+			<span class="itemtitle">Resolution set to {$row.new_value} by {$row.user}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+			{if $row.old_value}<span class="itemdate">- old resolution was {$row.old_value}</span>{/if}
+		</div>
+{elseif $row.type_id == 'title'}
+		<div class="bugitem">
+			<span class="itemtitle">Title set to &quot;{$row.new_value|escape}&quot; by {$row.user}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+			<span class="itemdate">- old title was &quot;{$row.old_value|escape}&quot;</span>
+		</div>
+{elseif $row.type_id == 'assign'}
+		<div class="bugitem">
+			<span class="itemtitle">Case assigned to {$row.new_value} by {$row.user}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+			<span class="itemdate">- was assigned to {$row.old_value}</span>
+		</div>
+{else}
+
+{$row|@dumper}
+
+{/if}
+{/foreach}
+
+		<div class="bugedit" id="editform" style="display: none;">
+
+			<table cellpadding="0" cellspacing="0" class="edittbl">
+				<tr id="editrow-title">
+					<td>Title:</td>
+					<td><input type="text" name="value-title" value="{$bug.title|escape}" style="width: 400px" /></td>
+				</tr>
+				<tr id="editrow-status">
+					<td>Status:</td>
+					<td><select name="value-status" id="value-status" onchange="show_resolution();">
+						<option value="open"    {if $bug.status=='open'    } selected{/if}>Open</option>
+						<option value="resolved"{if $bug.status=='resolved'} selected{/if}>Resolved</option>
+						<option value="closed"  {if $bug.status=='closed'  } selected{/if}>Closed</option>
+					</select></td>
+				</tr>
+				<tr id="editrow-resolution">
+					<td>Resolution:</td>
+					<td><select name="value-resolution" id="value-resolution">
+{foreach from=$cfg.resolutions item='label' key='key'}
+						<option value="{$key}"{if $bug.resolution==$key} selected{/if}>{$label}</option>
+{/foreach}
+					</select></td>
+				</tr>
+				<tr id="editrow-assign">
+					<td>Assigned To:</td>
+					<td><select name="value-assign" id="value-assign">
+{foreach from=$users item='row'}
+						<option value="{$row.name}"{if $row.name==$bug.assigned_user} selected{/if}>{$row.name|escape}</option>
+{/foreach}
+					</select></td>
+				</tr>
+				<tr id="editrow-attach" style="display: none;">
+					<td>Attach:</td>
+					<td><input type="file" name="attach" /> (Maximum {$max_attach_label})</td>
+				</tr>
+			</table>
+
+			<textarea name="note" id="editnote" wrap="virtual" style="width: 100%; height: 150px;"></textarea>
+
+			<table width="100%" cellpadding="0" cellspacing="0" class="buttontbl">
+				<tr>
+					<td width="33%" align="left"><input type="submit" value="Save" /></td>
+					<td width="34%" align="center"><a href="#" onclick="showattach(); return false;" id="attachlink">attach file?</a></td>
+					<td width="33%" align="right"><input type="submit" value="Save" /></td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
+	<div class="bughead">
+		&nbsp;
+		{$buttons}
+	</div>
+</div>
+
+<a name="bottom" id="bottom"></a>
+
+{include file='inc_foot.txt'}

@@ -1,0 +1,62 @@
+{include file='inc_head.txt' title='Create New Case'}
+
+<form action="{$cfg.root_url}create.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="MAX_FILE_SIZE" value="{$max_attach_bytes}">
+<input type="hidden" name="done" value="1" />
+
+<div class="bug">
+	<div class="bughead">
+		&nbsp;
+	</div>
+	<div class="bugdetails">
+
+		<table>
+			<tr>
+				<td class="spacey">Title:</td>
+				<td class="spacey"><input type="text" name="title" value="" style="width: 400px" /></td>
+			</tr>
+			<tr>
+				<td class="spacey">Reported By:</td>
+				<td class="spacey">{$user.name|escape}</td>
+			</tr>
+			<tr>
+				<td class="spacey">Assigned To:</td>
+				<td class="spacey"><select name="assigned">
+{foreach from=$users item='row'}
+					<option value="{$row.name}"{if $row.name==$user.name} selected{/if}>{$row.name|escape}</option>
+{/foreach}
+				</select></td>
+			</tr>
+		</table>
+
+	</div>
+	<div class="bugitems">
+
+		<div class="bugedit">
+
+			<table cellpadding="0" cellspacing="0" class="edittbl">
+				<tr id="editrow-attach" style="display: none;">
+					<td>Attach:</td>
+					<td><input type="file" name="attach" /> (Maximum {$max_attach_label})</td>
+				</tr>
+			</table>
+
+			<textarea name="description" wrap="virtual" style="width: 100%; height: 150px;"></textarea>
+
+			<table width="100%" cellpadding="0" cellspacing="0" class="buttontbl">
+				<tr>
+					<td width="33%" align="left"><input type="submit" value="Create Case" /></td>
+					<td width="34%" align="center"><a href="#" onclick="showattach(); return false;" id="attachlink">attach file?</a></td>
+					<td width="33%" align="right"><input type="submit" value="Create Case" /></td>
+				</tr>
+			</table>
+
+		</div>
+
+	</div>
+	<div class="bughead">
+		&nbsp;
+	</div>
+</div>
+
+{include file='inc_foot.txt'}

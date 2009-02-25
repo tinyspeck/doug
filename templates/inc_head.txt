@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>Bugs{if $title} - {$title|escape}{/if}</title>
+{assign var='bgcol' value='#C00000'}
+{assign var='fgcol' value='#ffdddd'}
+<style>{literal}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body, td, th {
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+
+h1 {
+	margin-top: 0;
+	color: {/literal}{$bgcol}{literal};
+}
+
+#nav {
+	background-color: {/literal}{$bgcol}{literal};
+	padding: 4px;
+	color: #fff;
+	font-weight: bold;
+}
+
+#nav a {
+	text-decoration: none;
+	color: #fff;
+}
+
+#nav a:hover {
+	text-decoration: underline;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+#body {
+	padding: 2em;
+}
+
+div.bug {
+	border: 1px solid {/literal}{$bgcol}{literal};
+	margin: 0px;
+	padding: 0px;
+}
+
+div.bughead {
+	text-align: right;
+	padding: 6px;
+	background-color: {/literal}{$bgcol}{literal};
+	color: #ffffff;
+}
+
+div.bughead a.button {
+	background-color: #EEEEEE;
+	border: 1px solid #000000;
+	color: #000000;
+	font-weight: bold;
+	padding: 3px 6px;
+}
+
+div.bugdetails {
+	background-color: #EEEEEE;
+	padding: 3px;
+	border-bottom: 1px solid {/literal}{$bgcol}{literal};
+}
+
+div.bugitem {
+	margin: 4px;
+}
+
+div.bugedit {
+	margin: 20px;
+	border: 1px solid {/literal}{$bgcol}{literal};
+	padding: 10px;
+	background-color: #EEEEEE;
+}
+
+#attachlink {
+	color: #999;
+}
+
+.edittbl td {
+	padding: 0 10px 6px 0;
+}
+
+.buttontbl td {
+	padding-top: 6px;
+}
+
+a.sekrit {
+	color: #000;
+	text-decoration: none;
+}
+
+a.sekrit:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.listtable {
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+
+.listtable th {
+	background-color: {/literal}{$bgcol}{literal};
+	color: #fff;
+	border-right: 1px solid #fff;
+	padding: 4px;
+}
+
+.listtable td {
+	padding: 4px;
+}
+
+.listtable .list1 {
+	background-color: #fff;
+}
+
+.listtable .list2 {
+	background-color: {/literal}{$fgcol}{literal};
+}
+
+div.bugitem {
+	margin: 4px;
+}
+
+div.bugitem .itemtitle {
+	font-weight: bold;
+}
+
+div.bugitem .itemdate {
+	color: #555555;
+	font-size: 11px;
+}
+
+div.bugitemtext {
+	font-size: 12px;
+	margin: 4px 0 12px 20px;
+}
+
+a.status-open {
+}
+
+a.status-resolved {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+}
+
+a.status-closed {
+	background-color: #999999;
+	color: white;
+	font-weight: bold;
+}
+
+</style>{/literal}
+<script>{literal}
+
+function get_tr_display(val){
+	if (document.all){
+		return val ? 'block' : 'none';
+	}
+	return val ? 'table-row' : 'none';
+}
+
+function showattach(){
+	document.getElementById('attachlink').style.display = 'none';
+	document.getElementById('editrow-attach').style.display = get_tr_display(1);
+}
+
+
+</script>{/literal}
+</head>
+<body>
+
+<div id="nav">
+	<div style="float: right">
+{if $user.name}
+		Hello {$user.name} (<a href="/logout.php">logout</a>)
+{else}
+		<a href="{$cfg.root_url}login.php">Not logged in</a>
+{/if}
+	</div>
+	<a href="{$cfg.root_url}">Home</a>
+{if $user.name}
+	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}create.php">Create</a>
+{/if}
+</div>
+
+<div id="body">
+
+{if $title}<h1>{$title|escape}</h1>{/if}

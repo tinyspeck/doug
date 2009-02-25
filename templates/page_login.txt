@@ -1,0 +1,13 @@
+{include file='inc_head.txt'}
+
+<p>We couldn't log you in. You're connected as <b>{$smarty.server.PHP_AUTH_USER|escape}</b>, but these are the valid users:</p>
+
+<ul>
+{foreach from=$users item='row'}
+	<li> {$row.name|escape} </li>
+{/foreach}
+</ul>
+
+<p><a href="/logout.php">Click here</a> to logout and then log back in using one of these accounts.</p>
+
+{include file='inc_foot.txt'}
