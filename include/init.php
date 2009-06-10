@@ -34,10 +34,9 @@
 	$user = array();
 	$smarty->assign_by_ref('user', $user);
 
-	if ($_SERVER[PHP_AUTH_USER]){
+	if ($_ENV[TSAuth_User]){
 
-		$user_enc = AddSlashes($_SERVER[PHP_AUTH_USER]);
-
+		$user_enc = AddSlashes($_ENV[TSAuth_User]);
 		$user = db_fetch_one("SELECT * FROM users WHERE name='$user_enc'");
 	}
 

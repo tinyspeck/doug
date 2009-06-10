@@ -186,10 +186,11 @@ function showattach(){
 <div id="nav">
 	<div style="float: right">
 {if $user.name}
-		Hello {$user.name} (<a href="/logout.php">logout</a>)
+		Hello {$user.name}
 {else}
-		<a href="{$cfg.root_url}login.php">Not logged in</a>
+		You ({$smarty.env.TSAuth_User}) do not have a bugs account
 {/if}
+		(<a href="http://auth.tinyspeck.com/logout/">logout</a>)
 	</div>
 	<a href="{$cfg.root_url}">Home</a>
 {if $user.name}
