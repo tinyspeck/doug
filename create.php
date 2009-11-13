@@ -55,7 +55,7 @@
 
 		}
 
-		header("location: $cfg[root_url]bug.php?id=$bug_id");
+		header("location: $cfg[root_url]$bug_id");
 		exit;
 	}
 
