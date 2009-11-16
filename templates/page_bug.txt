@@ -1,4 +1,4 @@
-{capture assign='title'}#{$bug.id}: {$bug.title|escape|default:'Untitled'}{/capture}
+{capture assign='title'}#{$bug.id}: {$bug.title|default:'Untitled'}{/capture}
 {include file='inc_head.txt' title=$title}
 
 <script>{literal}
