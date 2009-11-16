@@ -192,7 +192,9 @@ function showattach(){
 {/if}
 		(<a href="http://auth.tinyspeck.com/logout/">logout</a>)
 	</div>
-	<a href="{$cfg.root_url}">Home</a>
+	<a href="{$cfg.root_url}">Open Issues</a>
+	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}?all=1">All Issues</a>
 {if $user.name}
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}create.php">Create</a>

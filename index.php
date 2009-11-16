@@ -10,7 +10,13 @@
 	# get list of bugs
 	#
 
-	$where = '1';
+	if ($_GET[all]){
+		$where = '1';
+		$title = 'All Issues';
+	}else{
+		$where = "status != 'closed'";
+		$title = 'All Open Issues';
+	}
 
 	$count = db_fetch_single("SELECT COUNT(*) FROM bugs WHERE $where");
 	$bugs = db_fetch_all("SELECT * FROM bugs WHERE $where ORDER BY date_modified DESC LIMIT 100");
@@ -22,6 +28,7 @@
 
 	$smarty->assign('count', $count);
 	$smarty->assign_by_ref('bugs', $bugs);
+	$smarty->assign('title', $title);
 
 
 	#

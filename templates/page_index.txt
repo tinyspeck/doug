@@ -1,4 +1,4 @@
-{include file='inc_head.txt' title='All Issues'}
+{include file='inc_head.txt'}
 
 <table class="listtable" width="100%">
 	<tr>
