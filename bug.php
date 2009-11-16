@@ -51,6 +51,10 @@
 				'note'		=> AddSlashes($_POST[note]),
 				'attachment'	=> AddSlashes($attach),
 			));
+			
+			db_update('bugs', array(
+				'date_modified' => time(),
+			), "id=$bug[id]");
 
 		}
 
@@ -76,6 +80,7 @@
 
 		db_update('bugs', array(
 			$field		=> AddSlashes($new_value),
+			'date_modified' => time(),
 		), "id=$bug[id]");
 	}
 
