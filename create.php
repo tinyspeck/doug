@@ -20,7 +20,7 @@
 	# get list of users
 	#
 
-	$users = db_fetch_all("SELECT * FROM users ORDER BY name ASC");
+	$users = users_fetch_all();
 
 	$smarty->assign_by_ref('users', $users);
 
