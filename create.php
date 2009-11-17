@@ -54,6 +54,22 @@
 			));
 
 		}
+		
+		#
+		# Send an email
+		#
+		
+		$to_user = users_fetch($_POST['assigned']);
+		if ($to_user['email']){
+			$smarty->assign_by_ref('bug', bugs_fetch($bug_id));
+			$smarty->assign('bug_note', array_shift(bugs_fetch_notes($bug_id, 'note')));
+
+			loadlib('email');
+			email_send(array(
+				'to_email'	=> $to_user['email'],
+				'template'	=> 'email_bug_create.txt',
+			));
+		}
 
 		header("location: $cfg[root_url]$bug_id");
 		exit;

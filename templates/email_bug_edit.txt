@@ -1,0 +1,10 @@
+{assign var="email_subject" value="[BUGS] Case #`$bug.id` has been updated!"}
+
+Title: {$bug.title}
+Reported by: {$bug.opened_user}
+Status: {$bug.status}
+
+{$bug_note.note}
+
+-----
+{$cfg.abs_root_url}{$bug.id}

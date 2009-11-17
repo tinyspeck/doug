@@ -14,6 +14,7 @@
 	loadlib('db');
 	loadlib('smarty');
 	loadlib('users');
+	loadlib('bugs');
 
 	db_connect();
 

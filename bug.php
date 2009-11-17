@@ -10,7 +10,7 @@
 	# get the bug
 	#
 
-	$bug = db_fetch_one("SELECT * FROM bugs WHERE id=".intval($_REQUEST[id]));
+	$bug = bugs_fetch($_REQUEST[id]);
 
 	$smarty->assign_by_ref('bug', $bug);
 
@@ -23,7 +23,7 @@
 	# get all the notes
 	#
 
-	$notes = db_fetch_all("SELECT * FROM notes WHERE bug_id=$bug[id] ORDER BY date_create ASC");
+	$notes = bugs_fetch_notes($bug['id']);
 
 	$smarty->assign_by_ref('notes', $notes);
 
@@ -56,6 +56,36 @@
 				'date_modified' => time(),
 			), "id=$bug[id]");
 
+		}
+		
+		#
+		# Send emails
+		#
+		
+		loadlib('email');
+		
+		$bug = bugs_fetch($bug['id']);
+		$smarty->assign_by_ref('bug', $bug);
+		$smarty->assign('bug_note', array_pop(bugs_fetch_notes($bug['id'], 'note')));
+			
+		$to_user = users_fetch($bug['assigned_user']);
+		if ($to_user['email'] && $to_user['name'] != $user['name']){
+
+			email_send(array(
+				'to_email'	=> $to_user['email'],
+				'template'	=> 'email_bug_edit.txt',
+			));
+		}
+		
+		if ($bug['opened_user'] != $bug['assigned_user']){
+			$to_user = users_fetch($bug['opened_user']);
+			if ($to_user['email'] && $to_user['name'] != $user['name']){
+
+				email_send(array(
+					'to_email'	=> $to_user['email'],
+					'template'	=> 'email_bug_edit.txt',
+				));
+			}
 		}
 
 		header("location: $cfg[root_url]$bug[id]#bottom");

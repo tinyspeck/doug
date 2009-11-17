@@ -1,0 +1,9 @@
+{assign var="email_subject" value="[BUGS] A new bug has been assigned to you!"}
+
+Title: {$bug.title}
+Reported by: {$bug.opened_user}
+
+{$bug_note.note}
+
+-----
+{$cfg.abs_root_url}{$bug.id}
