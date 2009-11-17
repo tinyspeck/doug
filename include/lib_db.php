@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: lib_db.php,v 1.3 2008/03/20 19:40:11 cal Exp $
+	# $Id$
 	#
 
 	db_connect();
