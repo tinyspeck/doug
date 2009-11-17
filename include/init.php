@@ -13,6 +13,7 @@
 
 	loadlib('db');
 	loadlib('smarty');
+	loadlib('users');
 
 	db_connect();
 
@@ -36,8 +37,7 @@
 
 	if ($_ENV[TSAuth_User]){
 
-		$user_enc = AddSlashes($_ENV[TSAuth_User]);
-		$user = db_fetch_one("SELECT * FROM users WHERE name='$user_enc'");
+		$user = users_fetch($_ENV[TSAuth_User]);
 	}
 
 

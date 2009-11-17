@@ -1,3 +1,5 @@
 RewriteEngine on
 
 RewriteRule	^(\d+)/?$	bug.php?id=$1	[L,QSA]
+RewriteRule ^users/(.+)/?$ user.php?id=$1	[L,QSA]
+

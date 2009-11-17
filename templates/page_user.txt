@@ -1,0 +1,17 @@
+{include file='inc_head.txt' title="User Profile - `$profile.name`"}
+
+{if $is_own}
+<form method="post" action="{$cfg.root_url}users/{$profile.name|escape}">
+	<input type="hidden" name="done" value="1" />
+	<fieldset>
+	    <legend>Edit your data:</legend>
+		<label for="email">Email:</label> <input type="textbox" name="email" value="{$profile.email|escape}" /><br />
+	
+		<input type="submit" name="submit" value="Save" />	
+	</fieldset>
+</form>
+{else}
+	<p>If this was your page, you could edit stuff!</p>
+{/if}
+
+{include file='inc_foot.txt'}

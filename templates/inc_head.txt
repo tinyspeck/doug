@@ -186,7 +186,7 @@ function showattach(){
 <div id="nav">
 	<div style="float: right">
 {if $user.name}
-		Hello {$user.name}
+		Hello <a href="{$cfg.root_url}users/{$user.name}">{$user.name}</a>
 {else}
 		You ({$smarty.env.TSAuth_User}) do not have a bugs account
 {/if}
