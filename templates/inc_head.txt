@@ -33,7 +33,7 @@ h1 {
 	color: #fff;
 }
 
-#nav a:hover {
+#nav a:hover, #error a:hover {
 	text-decoration: underline;
 }
 
@@ -187,6 +187,10 @@ function showattach(){
 	<div style="float: right">
 {if $user.name}
 		Hello <a href="{$cfg.root_url}users/{$user.name}">{$user.name}</a>
+		{if !$user.email}
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="{$cfg.root_url}users/{$user.name}">You need to tell me your email address</a>
+		{/if}
 {else}
 		You ({$smarty.env.TSAuth_User}) do not have a bugs account
 {/if}

@@ -38,6 +38,10 @@
 	if ($_ENV[TSAuth_User]){
 
 		$user = users_fetch($_ENV[TSAuth_User]);
+		
+		if (!$user['name']){
+			$user = users_create($_ENV[TSAuth_User]);
+		}
 	}
 
 
