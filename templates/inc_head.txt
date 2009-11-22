@@ -26,6 +26,7 @@ h1 {
 	padding: 4px;
 	color: #fff;
 	font-weight: bold;
+	margin-top: 4px;
 }
 
 #nav a {
@@ -183,10 +184,15 @@ function showattach(){
 </head>
 <body>
 
+{php}
+$current = 'bugs';
+include('/usr/local/wwwIncludes/nav.txt');
+{/php}
+
 <div id="nav">
 	<div style="float: right">
 {if $user.name}
-		Hello <a href="{$cfg.root_url}users/{$user.name}">{$user.name}</a>
+		<a href="{$cfg.root_url}users/{$user.name}">Settings for {$user.name}</a>
 		{if !$user.email}
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="{$cfg.root_url}users/{$user.name}">You need to tell me your email address</a>
@@ -194,7 +200,6 @@ function showattach(){
 {else}
 		You ({$smarty.env.TSAuth_User}) do not have a bugs account
 {/if}
-		(<a href="http://auth.tinyspeck.com/logout/">logout</a>)
 	</div>
 	<a href="{$cfg.root_url}">Open Issues</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
