@@ -21,4 +21,10 @@
 	}
 
 	$GLOBALS[smarty]->register_modifier('dateify', 'dateify');
+	
+	function autolink($text){
+		return preg_replace("#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i", '<a href="\0">\0</a>', $text);
+	}
+
+	$GLOBALS[smarty]->register_modifier('autolink', 'autolink');
 ?>
