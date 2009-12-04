@@ -1,4 +1,4 @@
-{assign var="email_subject" value="[BUGS] A new bug has been assigned to you!"}
+{assign var="email_subject" value="[BUGS] A new bug has been assigned to you! #{$bug.id}"}
 
 Title: {$bug.title}
 Reported by: {$bug.opened_user}
