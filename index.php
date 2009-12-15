@@ -10,7 +10,11 @@
 	# get list of bugs
 	#
 
-	if ($_GET[all]){
+	if ($_GET['assigned_to']){
+		$where = "status != 'closed' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
+		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'];
+	}
+	elseif ($_GET[all]){
 		$where = '1';
 		$title = 'All Issues';
 	}else{
