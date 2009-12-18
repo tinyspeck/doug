@@ -14,6 +14,10 @@
 		$where = "status != 'closed' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
 		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'];
 	}
+	elseif ($_GET['opened_by']){
+		$where = "status != 'closed' AND assigned_user='" . addslashes($_GET['opened_by']) ."'";
+		$title = 'Opened Issues from ' . $_GET['opened_by'];
+	}
 	elseif ($_GET[all]){
 		$where = '1';
 		$title = 'All Issues';

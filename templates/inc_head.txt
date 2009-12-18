@@ -206,7 +206,9 @@ include('/usr/local/wwwIncludes/nav.txt');
 	<a href="{$cfg.root_url}?all=1">All Issues</a>
 {if $user.name}
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}?assigned_to={$user.name|escape}">Open Issues Assigned to Me</a>
+	<a href="{$cfg.root_url}?assigned_to={$user.name|escape}">My Open Issues</a>
+	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">My Opened Issues</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}create.php">Create</a>
 {/if}
