@@ -152,13 +152,21 @@ div.bugitemtext {
 a.status-open {
 }
 
-a.status-resolved {
+a.inline-status-open {
+	background-color: blue;
+	color: white;
+	font-weight: bold;
+}
+
+a.status-resolved,
+a.inline-status-resolved {
 	background-color: green;
 	color: white;
 	font-weight: bold;
 }
 
-a.status-closed {
+a.status-closed,
+a.inline-status-closed {
 	background-color: #999999;
 	color: white;
 	font-weight: bold;

@@ -111,7 +111,7 @@ function show_resolution(){
 			<span class="itemtitle">Note added by {$row.user}</span>
 			<span class="itemdate">{$row.date_create|dateify}</span>
 			<div class="bugitemtext">
-				{$row.note|escape|autolink|nl2br}
+				{$row.note|escape|autolink|nl2br|format_note}
 			</div>
 		</div>
 {/if}

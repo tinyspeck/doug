@@ -115,6 +115,23 @@
 	}
 
 
+	function format_note($txt){
+
+		$txt = preg_replace_callback('!(^|\s)#(\d+)!', 'local_link_bug', $txt);
+
+		return $txt;
+	}
+
+	function local_link_bug($m){
+
+		$id = intval($m[2]);
+
+		$bug = bugs_fetch($id);
+
+		return "$m[1]<a href=\"/bugs/$id\" class=\"inline-status-{$bug[status]}\">#$id</a>";
+	}
+
+
 	#
 	# get list of users
 	#
