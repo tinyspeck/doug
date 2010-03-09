@@ -5,6 +5,7 @@
 
 function show_form(assign, status, title, set_status){
 	document.getElementById('editform').style.display = 'none';
+	document.getElementById('subform').style.display = 'none';
 
 	document.getElementById('use-assign').value = assign;
 	document.getElementById('editrow-assign').style.display = get_tr_display(assign);
@@ -25,6 +26,8 @@ function show_form(assign, status, title, set_status){
 		}
 	}
 
+	document.getElementById('use-subs').value = 0;
+
 	show_resolution();
 	document.getElementById('editform').style.display = 'block';
 	window.setTimeout("document.getElementById('editnote').focus();", 0);
@@ -43,6 +46,20 @@ function show_resolution(){
 	document.getElementById('editrow-resolution').style.display = get_tr_display(show_resolution);
 }
 
+function show_subs(){
+
+	document.getElementById('editform').style.display = 'none';
+	document.getElementById('subform').style.display = 'block';
+
+	document.getElementById('use-assign').value	= 0;
+	document.getElementById('use-status').value	= 0;
+	document.getElementById('use-title').value	= 0;
+	document.getElementById('use-resolution').value	= 0;
+	document.getElementById('use-subs').value	= 1;
+
+}
+
+
 </script>{/literal}
 
 <form action="{$cfg.root_url}bug.php" method="post" enctype="multipart/form-data">
@@ -54,6 +71,7 @@ function show_resolution(){
 <input type="hidden" name="use-resolution" id="use-resolution" value="0" />
 <input type="hidden" name="use-assign"     id="use-assign"     value="0" />
 <input type="hidden" name="use-title"      id="use-title"      value="0" />
+<input type="hidden" name="use-subs"       id="use-subs"       value="0" />
 
 
 <div class="bug">
@@ -78,7 +96,7 @@ function show_resolution(){
 
 		<table>
 			<tr>
-				<td class="spacey">Status:</td>
+				<td class="spacey"><b>Status:</b></td>
 				<td class="spacey">
 {assign var='res_key' value=$bug.resolution}
 					{if $bug.status=='open'}Open{/if}
@@ -87,12 +105,21 @@ function show_resolution(){
 				</td>
 			</tr>
 			<tr>
-				<td class="spacey">Reported By:</td>
+				<td class="spacey"><b>Reported By:</b></td>
 				<td class="spacey">{$bug.opened_user|escape}</td>
 			</tr>
 			<tr>
-				<td class="spacey">Assigned To:</td>
+				<td class="spacey"><b>Assigned To:</b></td>
 				<td class="spacey">{$bug.assigned_user|escape}</td>
+			</tr>
+			<tr>
+				<td class="spacey"><b>Subscribers:</b></td>
+				<td class="spacey">
+{foreach from=$subs item='state' key='name' name='subloop'}
+					{$name|escape}{if $state=='auto'} (auto){/if}{if !$smarty.foreach.subloop.last},{/if}
+{/foreach}
+					<a href="#bugform" style="color: #999;" onclick="show_subs();">edit</a>
+				</td>
 			</tr>
 		</table>
 
@@ -144,6 +171,22 @@ function show_resolution(){
 			<span class="itemtitle">Case assigned to {$row.new_value} by {$row.user}</span>
 			<span class="itemdate">{$row.date_create|dateify}</span>
 			<span class="itemdate">- was assigned to {$row.old_value}</span>
+		</div>
+{elseif $row.type_id == 'sub'}
+		<div class="bugitem">
+			<span class="itemtitle">Subscriber added: {$row.old_value}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+	{if $row.old_value != $row.user}
+			<span class="itemdate">- by {$row.user}
+	{/if}
+		</div>
+{elseif $row.type_id == 'unsub'}
+		<div class="bugitem">
+			<span class="itemtitle">Subscriber removed: {$row.old_value}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+	{if $row.old_value != $row.user}
+			<span class="itemdate">- by {$row.user}
+	{/if}
 		</div>
 {else}
 
@@ -200,6 +243,23 @@ function show_resolution(){
 			</table>
 
 		</div>
+		<div class="bugedit" id="subform" style="display: none;">
+
+			<b>Bug Subscriptions</b><br />
+			<br />
+{foreach from=$users item='row'}
+{assign var='name' value=$row.name}
+			<input type="checkbox" id="sub-{$name}" name="sub-{$name}"{if $subs.$name && $subs.$name != 'auto'} checked{/if} />
+			<label for="sub-{$name}">{$row.name|escape}</label>
+			{if !$row.email} <span style="color: #999">(no email address)</span>{/if}
+			{if $subs.$name == 'auto'} <span style="color: #999">(auto)</span>{/if}
+			<br />
+{/foreach}
+			<br />
+			<input type="submit" value="Save" />
+			
+		</div>
+
 
 	</div>
 	<div class="bughead">

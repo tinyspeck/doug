@@ -29,6 +29,99 @@
 
 
 	#
+	# find out who's subscribed
+	#
+
+	$subs = array();
+	$smarty->assign_by_ref('subs', $subs);
+
+	$ret = db_fetch_all("SELECT * FROM subs WHERE bug_id=$bug[id]");
+	foreach ($ret as $row){
+		$subs[$row[user]] = 'reg';
+	}
+
+	if ($_GET[cal]){
+		dumper($ret);
+	}
+
+	if (!$subs[$bug['assigned_user']]){
+		$subs[$bug['assigned_user']] = 'auto';
+	}
+	if (!$subs[$bug['opened_user']]){
+		$subs[$bug['opened_user']] = 'auto';
+	}
+
+
+	#
+	# get list of users
+	#
+
+	$users = users_fetch_all();
+
+	$smarty->assign_by_ref('users', $users);
+
+
+	#
+	# save subs?
+	#
+
+	if ($_POST[done] && $_POST['use-subs']){
+
+		foreach ($users as $who){
+			$name = $who[name];
+
+			$was_subbed	= ($subs[$name] && $subs[$name] != 'auto') ? 1 : 0;
+			$is_subbed	= $_POST["sub-$name"] ? 1 : 0;
+
+			if ($was_subbed != $is_subbed){
+
+				$name_enc = AddSlashes($name);
+
+				if ($was_subbed){
+
+					#
+					# unsub
+					#
+
+					db_query("DELETE FROM subs WHERE bug_id=$bug[id] AND user='$name_enc'");
+
+					db_insert('notes', array(
+						'bug_id'	=> $bug[id],
+						'date_create'	=> time(),
+						'user'		=> AddSlashes($user[name]),
+						'type_id'	=> 'unsub',
+						'old_value'	=> AddSlashes($name),
+					));
+
+				}else{
+
+					#
+					# sub
+					#
+
+					db_insert('subs', array(
+						'bug_id'	=> $bug[id],
+						'user'		=> $name_enc,
+					));
+
+					db_insert('notes', array(
+						'bug_id'	=> $bug[id],
+						'date_create'	=> time(),
+						'user'		=> AddSlashes($user[name]),
+						'type_id'	=> 'sub',
+						'old_value'	=> AddSlashes($name),
+					));
+
+				}
+			}
+		}
+
+		header("location: $cfg[root_url]$bug[id]#bottom");
+		exit;
+	}
+
+
+	#
 	# change something
 	#
 
@@ -67,18 +160,12 @@
 		$bug = bugs_fetch($bug['id']);
 		$smarty->assign_by_ref('bug', $bug);
 		$smarty->assign('bug_note', array_pop(bugs_fetch_notes($bug['id'], 'note')));
-			
-		$to_user = users_fetch($bug['assigned_user']);
-		if ($to_user['email'] && $to_user['name'] != $user['name']){
 
-			email_send(array(
-				'to_email'	=> $to_user['email'],
-				'template'	=> 'email_bug_edit.txt',
-			));
-		}
-		
-		if ($bug['opened_user'] != $bug['assigned_user']){
-			$to_user = users_fetch($bug['opened_user']);
+
+		foreach (array_keys($subs) as $name){
+
+			$to_user = users_fetch($name);
+
 			if ($to_user['email'] && $to_user['name'] != $user['name']){
 
 				email_send(array(
@@ -86,6 +173,7 @@
 					'template'	=> 'email_bug_edit.txt',
 				));
 			}
+
 		}
 
 		header("location: $cfg[root_url]$bug[id]#bottom");
@@ -130,15 +218,6 @@
 
 		return "$m[1]<a href=\"/bugs/$id\" class=\"inline-status-{$bug[status]}\">#$id</a>";
 	}
-
-
-	#
-	# get list of users
-	#
-
-	$users = users_fetch_all();
-
-	$smarty->assign_by_ref('users', $users);
 
 
 	#
