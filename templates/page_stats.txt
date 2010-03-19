@@ -1,0 +1,91 @@
+{include file='inc_head.txt' title="Stats"}
+
+<table><tr valign="top"><td>
+
+<h2>Open bugs, by assignee</h2>
+
+<p>These need fixing and then resolving</p>
+
+<table class="listtable">
+	<tr>
+		<th>User</th>
+		<th>Bugs</th>
+	</tr>
+{foreach from=$open_bugs item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td>{$row.user}</td>
+		<td>{$row.num}</td>
+	</tr>
+{/foreach}
+</table>
+
+</td><td>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+</td><td>
+
+<h2>Resolved bugs, by reporter</h2>
+
+<p>These need verifying and then closing</p>
+
+<table class="listtable">
+	<tr>
+		<th>User</th>
+		<th>Bugs</th>
+	</tr>
+{foreach from=$reso_bugs item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td>{$row.user}</td>
+		<td>{$row.num}</td>
+	</tr>
+{/foreach}
+</table>
+
+</td></tr></table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<table><tr valign="top"><td>
+
+<h2>Fixed bugs, by asignee</h2>
+
+<p>These people are working hard!</p>
+
+<table class="listtable">
+	<tr>
+		<th>User</th>
+		<th>Bugs</th>
+	</tr>
+{foreach from=$fixs_bugs item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td>{$row.user}</td>
+		<td>{$row.num}</td>
+	</tr>
+{/foreach}
+</table>
+
+
+</td><td>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+</td><td>
+
+<h2>Created bugs, by reporter</h2>
+
+<p>These people are complaining the most</p>
+
+<table class="listtable">
+	<tr>
+		<th>User</th>
+		<th>Bugs</th>
+	</tr>
+{foreach from=$file_bugs item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td>{$row.user}</td>
+		<td>{$row.num}</td>
+	</tr>
+{/foreach}
+</table>
+
+</td></tr></table>
+
+{include file='inc_foot.txt'}

@@ -218,6 +218,8 @@ include('/usr/local/wwwIncludes/nav.txt');
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">My Opened Issues</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}stats.php">Stats</a>
+	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}create.php">Create</a>
 {/if}
 </div>
