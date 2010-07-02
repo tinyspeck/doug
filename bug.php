@@ -155,6 +155,10 @@
 		# Send emails
 		#
 		
+		if ($_POST['use-assign']){
+			$subs[$_POST['value-assign']] = 'auto';
+		}
+		
 		loadlib('email');
 		
 		$bug = bugs_fetch($bug['id']);
