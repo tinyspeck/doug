@@ -32,6 +32,17 @@
 	</div>
 	<div class="bugitems">
 
+		
+		<div style="margin-left: 20px; margin-top: 10px;">
+			<b>Remember:</b>
+			<ul>
+				<li>What exactly is wrong?</li>
+				<li>At which url did this occur?</li>
+				<li>If you were in the game, what location were you in? (/link)</li>
+				<li>If you were in the game, who were you logged in as?</li>
+			</ul>
+		</div>
+		
 		<div class="bugedit">
 
 			<table cellpadding="0" cellspacing="0" class="edittbl">
