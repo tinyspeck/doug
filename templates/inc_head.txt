@@ -228,4 +228,17 @@ include('/usr/local/wwwIncludes/nav.txt');
 
 <div id="body">
 
+{if $search}
+<div style="float: right">
+	<form action="./" method="get">
+{foreach from=$smarty.get item='v' key='k'}
+{if $k != 's'}
+		<input type="hidden" name="{$k|escape}" value="{$v|escape}" />
+{/if}
+{/foreach}
+		<input type="text" name="s" value="" /> <input type="submit" value="Go" />
+	</form>
+</div>
+{/if}
+
 {if $title}<h1>{$title|escape}</h1>{/if}
