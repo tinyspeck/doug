@@ -209,7 +209,14 @@
 
 	function format_note($txt){
 
+		$map = array(
+			'&lt;pre&gt;' => '<pre>',
+			'&lt;/pre&gt;' => '</pre>',
+		);
+
 		$txt = preg_replace_callback('!(^|\s)#(\d+)!', 'local_link_bug', $txt);
+		$txt = str_replace(array_keys($map), $map, $txt);
+		$txt = preg_replace_callback('!<pre>(.*)</pre>!s', 'local_strip_br', $txt);
 
 		return $txt;
 	}
@@ -221,6 +228,11 @@
 		$bug = bugs_fetch($id);
 
 		return "$m[1]<a href=\"/bugs/$id\" class=\"inline-status-{$bug[status]}\">#$id</a>";
+	}
+
+	function local_strip_br($m){
+
+		return '<pre>'.str_replace('<br />', '', $m[1]).'</pre>';
 	}
 
 
