@@ -11,18 +11,26 @@
 	#
 
 	if ($_GET['assigned_to']){
-		$where = "status != 'closed' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
+		$where = "status = 'open' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
 		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'];
 	}
 	elseif ($_GET['opened_by']){
 		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ."'";
-		$title = 'Opened Issues from ' . $_GET['opened_by'];
+		$title = 'Open & Resolved Issues reported by ' . $_GET['opened_by'];
 	}
 	elseif ($_GET[all]){
 		$where = '1';
 		$title = 'All Issues';
+	}
+	elseif ($_GET[resolved]){
+		$where = "status = 'resolved'";
+		$title = 'All Resolved Issues';
+	}
+	elseif ($_GET[closed]){
+		$where = "status = 'closed'";
+		$title = 'All Closed Issues';
 	}else{
-		$where = "status != 'closed'";
+		$where = "status = 'open'";
 		$title = 'All Open Issues';
 	}
 
@@ -36,7 +44,7 @@
 
 	$smarty->assign('count', $count);
 	$smarty->assign_by_ref('bugs', $bugs);
-	$smarty->assign('title', $title);
+	$smarty->assign('title', $title." ($count)");
 
 
 	#
