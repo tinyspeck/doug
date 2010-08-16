@@ -209,14 +209,16 @@ include('/usr/local/wwwIncludes/nav.txt');
 		You ({$smarty.env.TSAuth_User}) do not have a bugs account
 {/if}
 	</div>
-	<a href="{$cfg.root_url}">Open Issues</a>
+	<a href="{$cfg.root_url}">Open</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}?all=1">All Issues</a>
+	<a href="{$cfg.root_url}?resolved=1">Resolved</a>
+	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}?all=1">All</a>
 {if $user.name}
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}?assigned_to={$user.name|escape}">My Open Issues</a>
+	<a href="{$cfg.root_url}?assigned_to={$user.name|escape}">Assigned To Me</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">My Opened Issues</a>
+	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">Opened By Me</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}stats.php">Stats</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
