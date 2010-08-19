@@ -97,19 +97,21 @@ function show_subs(){
 		<table>
 			<tr>
 				<td class="spacey"><b>Status:</b></td>
-				<td class="spacey">
+				<td class="spacey" width="90%">
 {assign var='res_key' value=$bug.resolution}
 					{if $bug.status=='open'}Open{/if}
 					{if $bug.status=='resolved'}Resolved ({$cfg.resolutions.$res_key}){/if}
 					{if $bug.status=='closed'}Closed ({$cfg.resolutions.$res_key}){/if}
 				</td>
+				<td rowspan="4" style="padding-left:10px" valign="center"><img src="http://c2.glitch.bz/items/2010-02-05/722_1265424456_iconic.png" width="40" height="40"></td>
+				<td rowspan="4" style="padding-left:5px;padding-right:5px;" valign="center" width="200"><nobr>Piglet thanks you for</nobr> <nobr>making Glitch better.</nobr></td>
 			</tr>
 			<tr>
-				<td class="spacey"><b>Reported By:</b></td>
+				<td class="spacey"><b>Reported&nbsp;By:</b></td>
 				<td class="spacey">{$bug.opened_user|escape}</td>
 			</tr>
 			<tr>
-				<td class="spacey"><b>Assigned To:</b></td>
+				<td class="spacey"><b>Assigned&nbsp;To:</b></td>
 				<td class="spacey">{$bug.assigned_user|escape}</td>
 			</tr>
 			<tr>
