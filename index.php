@@ -127,8 +127,47 @@
 		}
 	}
 
+
+	#
+	# pagination
+	#
+
 	$count = db_fetch_single("SELECT COUNT(*) FROM bugs WHERE $where AND $search_extra");
-	$bugs = db_fetch_all("SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT 100");
+
+	$per_page = 100;
+	$pages = ceil($count / $per_page);
+	$page = intval($_GET['p']);
+	if ($page < 1) $page = 1;
+	if ($page > $pages) $page = $pages;
+	$start = ($page - 1) * $per_page;
+
+	$smarty->assign('page', $page);
+	$smarty->assign('num_pages', $pages);
+
+
+	#
+	# urls for the pages
+	#
+
+	$page_urls = array();
+
+	for ($i=1; $i<=$pages; $i++){
+		$pairs = array();
+		foreach ($_GET as $k => $v){
+			if ($k != 'p') $pairs[] = urlencode($k).'='.urlencode($v);
+		}
+		if ($i > 1) $pairs[] = "p=$i";
+		$page_urls[$i] = "./?".implode('&', $pairs);
+	}
+
+	$smarty->assign('pages', $page_urls);
+
+
+	#
+	# fetch!
+	#
+
+	$bugs = db_fetch_all("SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT $start, $per_page");
 
 	foreach ($bugs as $k => $v){
 

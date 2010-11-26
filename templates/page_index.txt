@@ -23,4 +23,17 @@
 {/foreach}
 </table>
 
+{if $num_pages>1}
+<div style="margin: 1em 0">
+	Page:
+{foreach from=$pages key='p' item='url'}
+{if $page==$p}
+	<b>{$p}</b>
+{else}
+	<a href="{$url}">{$p}</a>
+{/if}
+{/foreach}
+</div>
+{/if}
+
 {include file='inc_foot.txt'}
