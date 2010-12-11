@@ -13,7 +13,7 @@
 		<table>
 			<tr>
 				<td class="spacey">Title:</td>
-				<td class="spacey"><input type="text" name="title" value="" style="width: 400px" /></td>
+				<td class="spacey"><input type="text" name="title" value="{$smarty.get.prefill_title}" style="width: 400px" /></td>
 			</tr>
 			<tr>
 				<td class="spacey">Reported By:</td>
@@ -52,7 +52,7 @@
 				</tr>
 			</table>
 
-			<textarea name="description" wrap="virtual" style="width: 100%; height: 250px;"></textarea>
+			<textarea name="description" wrap="virtual" style="width: 100%; height: 250px;">{$smarty.get.prefill_desc}</textarea>
 
 			<table width="100%" cellpadding="0" cellspacing="0" class="buttontbl">
 				<tr>
