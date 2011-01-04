@@ -26,6 +26,23 @@
 
 
 	#
+	# check if we've already got a bug for this external url?
+	#
+
+	if ($_POST[url]){
+
+		$url_enc = AddSlashes($_POST[url]);
+
+		$row = db_fetch_hash(db_query("SELECT * FROM bugs WHERE external_url='$url_enc'"));
+
+		if ($row[id]){
+			header("location: $cfg[root_url]$row[id]?found=1");
+			exit;
+		}
+	}
+
+
+	#
 	# create a new bug?
 	#
 
@@ -38,6 +55,7 @@
 			'assigned_user'	=> AddSlashes($_POST[assigned]),
 			'status'	=> 'open',
 			'title'		=> AddSlashes($_POST[title]),
+			'external_url'	=> AddSlashes($_POST[url]),
 		));
 
 		$attach = get_attachement();

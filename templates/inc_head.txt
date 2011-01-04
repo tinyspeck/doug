@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Bugs{if $title} - {$title|escape}{/if}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 {assign var='bgcol' value='#C00000'}
 {assign var='fgcol' value='#ffdddd'}
 <style>{literal}

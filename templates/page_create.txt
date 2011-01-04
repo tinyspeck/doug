@@ -3,6 +3,7 @@
 <form action="{$cfg.root_url}create.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="{$max_attach_bytes}">
 <input type="hidden" name="done" value="1" />
+{if $smarty.post.url}<input type="hidden" name="url" value="{$smarty.post.url|escape}" />{/if}
 
 <div class="bug">
 	<div class="bughead">
@@ -13,8 +14,14 @@
 		<table>
 			<tr>
 				<td class="spacey">Title:</td>
-				<td class="spacey"><input type="text" name="title" value="{$smarty.get.prefill_title}" style="width: 400px" /></td>
+				<td class="spacey"><input type="text" name="title" value="{$smarty.get.prefill_title|escape}{$smarty.post.title|escape}" style="width: 400px" /></td>
 			</tr>
+{if $smarty.post.url}
+			<tr>
+				<td class="spacey">External URL:</td>
+				<td class="spacey">{$smarty.post.url|escape}</td>
+			</tr>
+{/if}
 			<tr>
 				<td class="spacey">Reported By:</td>
 				<td class="spacey">{$user.name|escape}</td>
@@ -52,7 +59,7 @@
 				</tr>
 			</table>
 
-			<textarea name="description" wrap="virtual" style="width: 100%; height: 250px;">{$smarty.get.prefill_desc}</textarea>
+			<textarea name="description" wrap="virtual" style="width: 100%; height: 250px;">{$smarty.get.prefill_desc|escape}{$smarty.post.desc|escape}</textarea>
 
 			<table width="100%" cellpadding="0" cellspacing="0" class="buttontbl">
 				<tr>
