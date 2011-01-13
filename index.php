@@ -136,6 +136,7 @@
 
 	$per_page = 100;
 	$pages = ceil($count / $per_page);
+	if ($pages < 1) $pages = 1;
 	$page = intval($_GET['p']);
 	if ($page < 1) $page = 1;
 	if ($page > $pages) $page = $pages;
