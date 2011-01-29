@@ -8,10 +8,10 @@
 	#################################################################
 
 	function db_connect() {
-		$GLOBALS[cfg][db_conn] = @mysql_connect($GLOBALS[cfg][db_host], $GLOBALS[cfg][db_user], $GLOBALS[cfg][db_pass]);
+		$GLOBALS[cfg][db_conn] = mysql_connect($GLOBALS[cfg][db_host], $GLOBALS[cfg][db_user], $GLOBALS[cfg][db_pass]);
 
 		if ($GLOBALS[cfg][db_conn]) {
-			@mysql_select_db($GLOBALS[cfg][db_name], $GLOBALS[cfg][db_conn]);	
+			mysql_select_db($GLOBALS[cfg][db_name], $GLOBALS[cfg][db_conn]);	
 			return 1;
 		}
 
