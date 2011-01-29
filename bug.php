@@ -227,7 +227,7 @@
 
 		$bug = bugs_fetch($id);
 
-		return "$m[1]<a href=\"/bugs/$id\" class=\"inline-status-{$bug[status]}\">#$id</a>";
+		return "$m[1]<a href=\"/$id\" class=\"inline-status-{$bug[status]}\">#$id</a>";
 	}
 
 	function local_strip_br($m){
