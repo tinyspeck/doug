@@ -258,7 +258,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 </div>
 {/if}
 
-{if $title}<h1>{$title|escape}</h1> {if $do_filter} <a href="#" onclick="showfilter(); return false;" id="filterlink">Filter</a>{/if}{/if}
+{if $title}<h1>{$title|escape} {if $do_filter} <a href="#" onclick="showfilter(); return false;" id="filterlink">Filter</a>{/if} </h1>{/if}
 
 <div id="filterform"><form name="filter" action="/" method="get">
 	<table>
