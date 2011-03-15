@@ -130,8 +130,8 @@
 			}
 		}
 		elseif ($_GET['opened_by']){
-			$where = "status !='closed' AND opened_user='" . addslashes($_GET['opened_by']) ."'";
-			$title = 'Open & Resolved Issues reported by ' . $_GET['opened_by'];
+			$where .= " AND opened_user='" . addslashes($_GET['opened_by']) ."'";
+			$title = $title_status.' reported by ' . $_GET['opened_by'];
 			
 		} else {
 			$title = 'All Open Issues';
@@ -183,6 +183,8 @@
 	#
 
 	$bugs = db_fetch_all("SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT $start, $per_page");
+
+	echo "SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT $start, $per_page";
 
 	foreach ($bugs as $k => $v){
 
