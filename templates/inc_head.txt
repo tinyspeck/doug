@@ -291,4 +291,5 @@ include('/usr/local/wwwIncludes/nav.txt');
 			<td colspan="2"><input type="submit" value="Go!"></td>
 		</tr>
 	</table>
+</form>
 </div>
