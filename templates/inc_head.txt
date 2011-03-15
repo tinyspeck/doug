@@ -261,11 +261,11 @@ include('/usr/local/wwwIncludes/nav.txt');
 
 {if $title}<h1>{$title|escape} {if $do_filter} <a href="#" onclick="showfilter(); return false;" id="filterlink">Filter</a>{/if} </h1>{/if}
 
-<div id="filterform"><form name="filter" action="{$cfg.root_url}" method="get">
+{if $do_filter}<div id="filterform"><form name="filter" action="{$cfg.root_url}" method="get">
 	<table>
 		<tr>
 			<td>Assigned to:</td><td><select name="assigned_to" id="select_assigned_to">
-				<option value="all" selected>[All]</option>
+				<option value="" selected>[All]</option>
 {foreach from=$users item='row'}
 				<option value="{$row.name}">{$row.name|escape}</option>
 {/foreach}
@@ -273,13 +273,13 @@ include('/usr/local/wwwIncludes/nav.txt');
 		</tr>
 		<tr>
 			<td>Opened by: </td><td><select name="opened_by" id="select_opened_by">
-				<option value="all" selected>[All]</option>
+				<option value="" selected>[All]</option>
 {foreach from=$users item='row'}
 				<option value="{$row.name}">{$row.name|escape}</option>
 {/foreach}</td>
 		</tr>
 		<tr>	<td>Status: </td><td><select name="status" id="select_status">
-			<option value="all">[All]</option>
+			<option value="">[All]</option>
 			<option value="open">Open</option>
 			<option value="resolved">Resolved</option>
 			<option value="closed">Closed</option>
@@ -292,4 +292,4 @@ include('/usr/local/wwwIncludes/nav.txt');
 		</tr>
 	</table>
 </form>
-</div>
+</div>{/if}
