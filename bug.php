@@ -127,17 +127,16 @@
 
 	if ($_POST[done]){
 
-		if ($_POST['use-status']	){ local_set_bug_prop('status',		$_POST['value-status'],		'status'); }
-		if ($_POST['use-resolution']	){ 
-			local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution');
-			if ($_POST['value-resolution'] == 'resolved' && $bug['assigned_user'] != $bug['opened_user']){
+		if ($_POST['use-status']	){ 
+			local_set_bug_prop('status', $_POST['value-status'], 'status');
+		
+			if ($_POST['value-status'] == 'resolved' && $bug['assigned_user'] != $bug['opened_user']){
 				local_set_bug_prop('assigned_user', $bug['opened_user'], 'assign');
 			}
-			$resolve_auto_assign = 1;
 		}
-		
-		if ($_POST['use-assign'] 
-		    && !$resolve_auto_assign	){ local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign'); }
+
+		if ($_POST['use-resolution']	){ local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution'); }
+		if ($_POST['use-assign'] 	){ local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign'); }
 		if ($_POST['use-title']		){ local_set_bug_prop('title',		$_POST['value-title'],		'title'); }
 
 		$attach = get_attachement();
