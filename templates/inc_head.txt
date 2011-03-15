@@ -92,6 +92,7 @@ div.bugedit {
 
 #filterlink {
 	color: #999;
+	font-size: 12px;
 }
 
 #filterform {
@@ -260,7 +261,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 
 {if $title}<h1>{$title|escape} {if $do_filter} <a href="#" onclick="showfilter(); return false;" id="filterlink">Filter</a>{/if} </h1>{/if}
 
-<div id="filterform"><form name="filter" action="/" method="get">
+<div id="filterform"><form name="filter" action="{$cfg.root_url}" method="get">
 	<table>
 		<tr>
 			<td>Assigned to:</td><td><select name="assigned_to" id="select_assigned_to">
@@ -287,7 +288,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 			<td>Free text: </td><td><input type="text" length="100" name="s"/></td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="Button" name="Go" value="Go!"></td>
+			<td colspan="2"><input type="submit" value="Go!"></td>
 		</tr>
 	</table>
 </div>
