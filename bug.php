@@ -128,7 +128,16 @@
 	if ($_POST[done]){
 
 		if ($_POST['use-status']	){ local_set_bug_prop('status',		$_POST['value-status'],		'status'); }
-		if ($_POST['use-resolution']	){ local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution'); }
+		if ($_POST['use-resolution']	){ local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution');
+		
+		#
+		# per IRC request, if this bug is being moved to "resolved", punt it back to the reporter for closing
+		#
+		
+		if ($_POST['use-resolution'] == 'resolved' && $bug['assigned_user'] != $bug['opened_user']){
+			local_set_bug_prop('assigned_user', $bug['opened_user'], 'assign');
+		}
+	}
 		if ($_POST['use-assign']	){ local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign'); }
 		if ($_POST['use-title']		){ local_set_bug_prop('title',		$_POST['value-title'],		'title'); }
 
