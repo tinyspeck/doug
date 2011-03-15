@@ -134,7 +134,7 @@
 				local_set_bug_prop('assigned_user', $bug['opened_user'], 'assign');
 			}
 		}
-	}
+		
 		if ($_POST['use-assign']	){ local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign'); }
 		if ($_POST['use-title']		){ local_set_bug_prop('title',		$_POST['value-title'],		'title'); }
 
