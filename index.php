@@ -107,9 +107,11 @@
 		if ($_GET['status'] && in_array($_GET['status'],array('open','resolved','closed'))){
 			$title_status = ucfirst($_GET['status']).' Issues';
 			$where = "status = '$_GET[status]'";
+			$smarty->assign('form_status',$_GET['status']);
 		} elseif ($_GET['status'] == 'notclosed') {
 			$title_status = 'Open and Resolved Issues';
 			$where = "status != 'closed'";
+			$smarty->assign('form_status','notclosed');
 		} else{
 			$title_status = 'Open Issues';
 			$where = "status = 'open'";
@@ -141,6 +143,10 @@
 			$title .= " matching $s";
 		}
 	}
+
+	$smarty->assign('form_assigned_to',$_GET['assigned_to']);
+	$smarty->assign('form_opened_by',$_GET['opened_by']);
+	$smarty->assign('form_search',$_GET['form_search']);
 
 	#
 	# pagination
@@ -183,8 +189,6 @@
 	#
 
 	$bugs = db_fetch_all("SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT $start, $per_page");
-
-	echo "SELECT * FROM bugs WHERE $where AND $search_extra ORDER BY date_modified DESC LIMIT $start, $per_page";
 
 	foreach ($bugs as $k => $v){
 

@@ -265,27 +265,27 @@ include('/usr/local/wwwIncludes/nav.txt');
 	<table>
 		<tr>
 			<td>Assigned to:</td><td><select name="assigned_to" id="select_assigned_to">
-				<option value="" selected>[All]</option>
+				<option value=""{if !form_assigned_to} selected{/if}>[All]</option>
 {foreach from=$users item='row'}
-				<option value="{$row.name}">{$row.name|escape}</option>
+				<option value="{$row.name}"{if $form_assigned_to == $row.name} selected{/if}>{$row.name|escape}</option>
 {/foreach}
 			</select></td>
 		</tr>
 		<tr>
 			<td>Opened by: </td><td><select name="opened_by" id="select_opened_by">
-				<option value="" selected>[All]</option>
+				<option value=""{if !$form_opened_by} selected{/if}>[All]</option>
 {foreach from=$users item='row'}
-				<option value="{$row.name}">{$row.name|escape}</option>
+				<option value="{$row.name}"{if $form_opened_by == $row.name} selected{/if}>{$row.name|escape}</option>
 {/foreach}</td>
 		</tr>
 		<tr>	<td>Status: </td><td><select name="status" id="select_status">
-			<option value="open" selected>Open</option>
-			<option value="resolved">Resolved</option>
-			<option value="notclosed">Open & Resolved</option>
-			<option value="closed">Closed</option>
+			<option value="open"{if $form_status = 'open'} selected{/if}>Open</option>
+			<option value="resolved"{if $form_status = 'resolved'} selected{/if}>Resolved</option>
+			<option value="notclosed"{if $form_status = 'notclosed'} selected{/if}>Open & Resolved</option>
+			<option value="closed"{if $form_status = 'closed'} selected{/if}>Closed</option>
 		</select></td>
 		<tr>
-			<td>Free text: </td><td><input type="text" length="100" name="s"/></td>
+			<td>Free text: </td><td><input type="text" length="100" name="s" value="{$form_search}"/></td>
 		</tr>
 		<tr>
 			<td colspan="2"><input type="submit" value="Go!"></td>
