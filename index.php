@@ -189,6 +189,7 @@
 	# output
 	#
 
+	$smarty->assign('users', users_fetch_all());
 	$smarty->assign('do_filter', 1);
 
 	$smarty->display('page_index.txt');
