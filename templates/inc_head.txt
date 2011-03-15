@@ -90,6 +90,10 @@ div.bugedit {
 	color: #999;
 }
 
+#filterlink {
+	color: #999;
+}
+
 .edittbl td {
 	padding: 0 10px 6px 0;
 }
@@ -188,6 +192,11 @@ function showattach(){
 	document.getElementById('editrow-attach').style.display = get_tr_display(1);
 }
 
+function showfilter(){
+	document.getElementById('filterlink').style.display = 'none';
+	document.getElementById('filterform').style.display = 'block';
+}
+
 
 </script>{/literal}
 </head>
@@ -242,4 +251,36 @@ include('/usr/local/wwwIncludes/nav.txt');
 </div>
 {/if}
 
-{if $title}<h1>{$title|escape}</h1>{/if}
+{if $title}<h1>{$title|escape}</h1>{/if}{if $do_filter} <a href="#" onclick="showfilter(); return false;" id="filterlink">Filter</a>{/if}
+
+<div id="filterform" style="display:none"><form name="filter" action="/" method="get">
+	<table>
+		<tr>
+			<td>Assigned to:</td><td><select name="assigned_to" id="select_assigned_to">
+				<option value="all" selected>[All]</option>
+{foreach from=$users item='row'}
+				<option value="{$row.name}">{$row.name|escape}</option>
+{/foreach}
+			</select></td>
+		</tr>
+		<tr>
+			<td>Opened by: <td><td><select name="opened_by" id="select_opened_by">
+				<option value="all" selected>[All]</option>
+{foreach from=$users item='row'}
+				<option value="{$row.name}">{$row.name|escape}</option>
+{/foreach}</td>
+		</tr>
+		<tr>	<td>Status: </td><td><select name="status" id="select_status">
+			<option value="all">[All]</option>
+			<option value="open">Open</option>
+			<option value="resolved">Resolved</option>
+			<option value="closed">Closed</option>
+		</select></td>
+		<tr>
+			<td>Free text: </td><td></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="Button" name="Go" value="Go!"></td>
+		</tr>
+	</table>
+</div>
