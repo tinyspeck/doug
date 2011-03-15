@@ -14,11 +14,11 @@
 	$search_extra = 1;
 	$s = '';
 
-	if ($_GET[s]){
+	if ($_GET['s']){
 
-		$s = '"'.$_GET[s].'"';
+		$s = '"'.$_GET['s'].'"';
 
-		$terms = search_split_terms($_GET[s]);
+		$terms = search_split_terms($_GET['s']);
 		$terms_db = search_db_escape_terms($terms);
 
 		$parts_bugs = array();
@@ -37,8 +37,8 @@
 
 		$ids = array(0);
 
-		foreach ($ids1 as $row){ $ids[$row[id]] = 1; }
-		foreach ($ids2 as $row){ $ids[$row[bug_id]] = 1; }
+		foreach ($ids1 as $row){ $ids[$row['id']] = 1; }
+		foreach ($ids2 as $row){ $ids[$row['bug_id']] = 1; }
 
 		$search_extra = " id IN (".implode(',', array_keys($ids)).")";
 	}
@@ -79,13 +79,18 @@
 		return $out;
 	}
 
-
-
 	#
 	# get list of bugs
 	#
 
-	if ($_GET['assigned_to']){
+	if ($_GET['assigned_to'] && $_GET['opened_by']){
+		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ." AND assigned_user='" . addslashes($_GET['assigned_to']) . "'";
+		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'] . ' and reported by ' . $_GET['opened_by'];
+		if ($s){
+			$title .= " matching $s";
+		}
+	}
+	elseif ($_GET['assigned_to']){
 		$where = "status = 'open' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
 		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'];
 		if ($s){
@@ -99,21 +104,21 @@
 			$title .= " matching $s";
 		}
 	}
-	elseif ($_GET[all]){
+	elseif ($_GET['all']){
 		$where = '1';
 		$title = 'All Issues';
 		if ($s){
 			$title = "Issues matching $s";
 		}
 	}
-	elseif ($_GET[resolved]){
+	elseif ($_GET['resolved']){
 		$where = "status = 'resolved'";
 		$title = 'All Resolved Issues';
 		if ($s){
 			$title = "Resolved Issues matching $s";
 		}
 	}
-	elseif ($_GET[closed]){
+	elseif ($_GET['closed']){
 		$where = "status = 'closed'";
 		$title = 'All Closed Issues';
 		if ($s){
@@ -172,7 +177,7 @@
 
 	foreach ($bugs as $k => $v){
 
-		$bugs[$k][age] = ceil((time() - $v[date_create]) / (24 * 60 * 60));
+		$bugs[$k]['age'] = ceil((time() - $v['date_create']) / (24 * 60 * 60));
 	}
 
 	$smarty->assign('count', $count);
@@ -183,6 +188,8 @@
 	#
 	# output
 	#
+
+	$smarty->assign('do_filter', 1);
 
 	$smarty->display('page_index.txt');
 ?>
