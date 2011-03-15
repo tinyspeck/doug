@@ -4,6 +4,7 @@
 	<tr>
 		<th>ID</th>
 		<th>Assigned</th>
+		<th>Reported By</th>
 		<th>Title</th>
 		<th>Age</th>
 		<th>Updated</th>
@@ -12,6 +13,7 @@
 	<tr class="{cycle values='list1,list2'}">
 		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
 		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
 		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
 {if $row.age==1}
 		<td>1 day</td>
