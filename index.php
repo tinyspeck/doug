@@ -146,7 +146,7 @@
 
 	$smarty->assign('form_assigned_to',$_GET['assigned_to']);
 	$smarty->assign('form_opened_by',$_GET['opened_by']);
-	$smarty->assign('form_search',$_GET['form_search']);
+	$smarty->assign('form_search',$_GET['s']);
 
 	#
 	# pagination
