@@ -279,9 +279,9 @@ include('/usr/local/wwwIncludes/nav.txt');
 {/foreach}</td>
 		</tr>
 		<tr>	<td>Status: </td><td><select name="status" id="select_status">
-			<option value="">[All]</option>
-			<option value="open">Open</option>
+			<option value="open" selected>Open</option>
 			<option value="resolved">Resolved</option>
+			<option value="notclosed">Open & Resolved</option>
 			<option value="closed">Closed</option>
 		</select></td>
 		<tr>

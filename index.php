@@ -107,7 +107,10 @@
 		if ($_GET['status'] && in_array($_GET['status'],array('open','resolved','closed'))){
 			$title_status = ucfirst($_GET['status']).' Issues';
 			$where = "status = '$_GET[status]'";
-		} else {
+		} elseif ($_GET['status'] == 'notclosed') {
+			$title_status = 'Open and Resolved Issues';
+			$where = "status != 'closed'";
+		} else{
 			$title_status = 'Open Issues';
 			$where = "status = 'open'";
 		}
