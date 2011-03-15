@@ -83,28 +83,7 @@
 	# get list of bugs
 	#
 
-	if ($_GET['assigned_to'] && $_GET['opened_by']){
-		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ."' AND assigned_user='" . addslashes($_GET['assigned_to']) . "'";
-		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'] . ' and reported by ' . $_GET['opened_by'];
-		if ($s){
-			$title .= " matching $s";
-		}
-	}
-	elseif ($_GET['assigned_to']){
-		$where = "status = 'open' AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
-		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'];
-		if ($s){
-			$title .= " matching $s";
-		}
-	}
-	elseif ($_GET['opened_by']){
-		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ."'";
-		$title = 'Open & Resolved Issues reported by ' . $_GET['opened_by'];
-		if ($s){
-			$title .= " matching $s";
-		}
-	}
-	elseif ($_GET['all']){
+	if ($_GET['all']){
 		$where = '1';
 		$title = 'All Issues';
 		if ($s){
@@ -125,13 +104,40 @@
 			$title = "Closed Issues matching $s";
 		}
 	}else{
-		$where = "status = 'open'";
-		$title = 'All Open Issues';
+		if ($_GET['status'] && in_array($_GET['status'],array('open','resolved','closed'))){
+			$title_status = ucfirst($_GET['status']).' Issues';
+			$where = "status = '$_GET[status]'";
+		} else {
+			$title_status = 'Open Issues';
+			$where = "status = 'open'";
+		}
+		
+		if ($_GET['assigned_to'] && $_GET['opened_by']){
+			$where .= " AND opened_user='" . addslashes($_GET['opened_by']) ."' AND assigned_user='" . addslashes($_GET['assigned_to']) . "'";
+			$title = $title_status.' Assigned to ' . $_GET['assigned_to'] . ' and reported by ' . $_GET['opened_by'];
+			if ($s){
+				$title .= " matching $s";
+			}
+		}
+		elseif ($_GET['assigned_to']){
+			$where .= " AND assigned_user='" . addslashes($_GET['assigned_to']) ."'";
+			$title = $title_status.' Assigned to ' . $_GET['assigned_to'];
+			if ($s){
+				$title .= " matching $s";
+			}
+		}
+		elseif ($_GET['opened_by']){
+			$where = "status !='closed' AND opened_user='" . addslashes($_GET['opened_by']) ."'";
+			$title = 'Open & Resolved Issues reported by ' . $_GET['opened_by'];
+			
+		} else {
+			$title = 'All Open Issues';
+		}
+
 		if ($s){
-			$title = "Open Issues matching $s";
+			$title .= " matching $s";
 		}
 	}
-
 
 	#
 	# pagination
