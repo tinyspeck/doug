@@ -84,7 +84,7 @@
 	#
 
 	if ($_GET['assigned_to'] && $_GET['opened_by']){
-		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ." AND assigned_user='" . addslashes($_GET['assigned_to']) . "'";
+		$where = "status != 'closed' AND opened_user='" . addslashes($_GET['opened_by']) ."' AND assigned_user='" . addslashes($_GET['assigned_to']) . "'";
 		$title = 'Open Issues Assigned to ' . $_GET['assigned_to'] . ' and reported by ' . $_GET['opened_by'];
 		if ($s){
 			$title .= " matching $s";
