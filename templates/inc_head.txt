@@ -279,10 +279,10 @@ include('/usr/local/wwwIncludes/nav.txt');
 {/foreach}</td>
 		</tr>
 		<tr>	<td>Status: </td><td><select name="status" id="select_status">
-			<option value="open"{if $form_status = 'open'} selected{/if}>Open</option>
-			<option value="resolved"{if $form_status = 'resolved'} selected{/if}>Resolved</option>
-			<option value="notclosed"{if $form_status = 'notclosed'} selected{/if}>Open & Resolved</option>
-			<option value="closed"{if $form_status = 'closed'} selected{/if}>Closed</option>
+			<option value="open"{if $form_status == 'open'} selected{/if}>Open</option>
+			<option value="resolved"{if $form_status == 'resolved'} selected{/if}>Resolved</option>
+			<option value="notclosed"{if $form_status == 'notclosed'} selected{/if}>Open & Resolved</option>
+			<option value="closed"{if $form_status == 'closed'} selected{/if}>Closed</option>
 		</select></td>
 		<tr>
 			<td>Free text: </td><td><input type="text" length="100" name="s" value="{$form_search}"/></td>
