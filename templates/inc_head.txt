@@ -283,7 +283,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 			<option value="closed"{if $form_status == 'closed'} selected{/if}>Closed</option>
 		</select></td>
 
-			<td>Free text: </td><td><input type="text" size="100" name="s" value="{$form_search}"/></td>
+			<td>Free text: </td><td><input type="text" size="50" name="s" value="{$form_search}"/></td>
 
 			<td colspan="2"><input type="submit" value="Go!"></td>
 		</tr>
