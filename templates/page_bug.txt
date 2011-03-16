@@ -201,6 +201,11 @@ function show_subs(){
 			<span class="itemtitle">Owner changed from {$row.old_value} to {$row.new_value} by {$row.user}</span>
 			<span class="itemdate">{$row.date_create|dateify}</span>
 		</div>
+{elseif $row.type_id == 'resolver'}
+		<div class="bugitem">
+			<span class="itemtitle">Resolver was set to {$row.new_value}{if $row.old_value} (was {$row.old_value}){/if}</span>
+			<span class="itemdate">{$row.date_create|dateify}</span>
+		</div>
 {else}
 
 {$row|@dumper}
