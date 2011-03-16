@@ -130,8 +130,16 @@
 		if ($_POST['use-status']	){ 
 			local_set_bug_prop('status', $_POST['value-status'], 'status');
 		
+			#
+			# If a bug is resolved, assign it to the opener so they can check it and close it
+			#
+			# Also note who actually did the work...
+			#
+		
 			if ($_POST['value-status'] == 'resolved' && $bug['assigned_user'] != $bug['opened_user']){
+				local_set_bug_prop('resolved_user', $bug['assigned_user'], 'resolver');
 				local_set_bug_prop('assigned_user', $bug['opened_user'], 'assign');
+
 			}
 		}
 
