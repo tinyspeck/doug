@@ -136,10 +136,11 @@
 			# Also note who actually did the work...
 			#
 		
-			if ($_POST['value-status'] == 'resolved' && $bug['assigned_user'] != $bug['opened_user']){
-				local_set_bug_prop('resolved_user', $bug['assigned_user'], 'resolver');
+			if ($_POST['value-status'] == 'resolved'){
+				if ($bug['assigned_user'] != $bug['opened_user']){
+					local_set_bug_prop('resolved_user', $bug['assigned_user'], 'resolver');
+				}
 				local_set_bug_prop('assigned_user', $bug['opened_user'], 'assign');
-
 			}
 		}
 
