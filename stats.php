@@ -12,7 +12,7 @@
 
 	$open_bugs = db_fetch_all("SELECT COUNT(id) AS num, assigned_user AS user FROM bugs WHERE status='open'     GROUP BY user ORDER BY num DESC");
 	$reso_bugs = db_fetch_all("SELECT COUNT(id) AS num, opened_user   AS user FROM bugs WHERE status='resolved' GROUP BY user ORDER BY num DESC");
-	$fixs_bugs = db_fetch_all("SELECT COUNT(id) as num, resolved_user AS user FROM bugs WHERE (status='closed' OR status='resolved') GROUP BY user ORDER BY num DESC");
+	$fixs_bugs = db_fetch_all("SELECT COUNT(id) as num, assigned_user AS user FROM bugs WHERE (status='closed' OR status='resolved') GROUP BY user ORDER BY num DESC");
 	$file_bugs = db_fetch_all("SELECT COUNT(id) as num, opened_user   AS user FROM bugs GROUP BY user ORDER BY num DESC");
 
 	totalize($open_bugs);
