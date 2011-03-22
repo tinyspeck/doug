@@ -108,7 +108,7 @@
 			$title_status = ucfirst($_GET['status']).' Issues';
 			$where = "status = '$_GET[status]'";
 			$smarty->assign('form_status',$_GET['status']);
-		} elseif ($_GET['status'] == 'notclosed') {
+		} elseif ($_GET['status'] == 'notclosed' || ($_GET['opened_by'] && !$_GET['assigned'] && !$_GET['status'])) {
 			$title_status = 'Open and Resolved Issues';
 			$where = "status != 'closed'";
 			$smarty->assign('form_status','notclosed');
@@ -134,15 +134,6 @@
 		elseif ($_GET['opened_by']){
 			$where .= " AND opened_user='" . addslashes($_GET['opened_by']) ."'";
 			$title = $title_status.' reported by ' . $_GET['opened_by'];
-
-			#
-			# special-case so the "opened by me" tab functions as expected.
-			#
-			if (!$_GET['status']){
-				$title_status = 'Open and Resolved Issues';
-				$where = "status != 'closed'";
-			}
-			
 		} else {
 			$title = 'All Open Issues';
 		}
