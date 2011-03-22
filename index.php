@@ -134,6 +134,14 @@
 		elseif ($_GET['opened_by']){
 			$where .= " AND opened_user='" . addslashes($_GET['opened_by']) ."'";
 			$title = $title_status.' reported by ' . $_GET['opened_by'];
+
+			#
+			# special-case so the "opened by me" tab functions as expected.
+			#
+			if (!$_GET['status']){
+				$title_status = 'Open and Resolved Issues';
+				$where = "status != 'closed'";
+			}
 			
 		} else {
 			$title = 'All Open Issues';
