@@ -13,7 +13,7 @@ Changes:
 {/if}{if $updates.resolution}Resolution changed from {$updates.resolution.old} to {$updates.resolution.new}
 {/if}{if $updates.assign}Bug was reassigned to {$updates.assign.new} (was {$updates.assign.old})
 {/if}{if $updates.title}Title updated - was "{$updates.title.old}"
-{/if}-----
+{/if}-----{/if}
 
 {$bug_note.note}
 
