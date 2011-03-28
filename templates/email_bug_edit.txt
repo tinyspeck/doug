@@ -9,11 +9,12 @@ Status: {$bug.status}
 {if $updates|@count}-----
 Changes:
 
-{if $updates.status}Status changed from {$updates.status.old} to {$updates.status.new}
-{/if}{if $updates.resolution}Resolution changed from {$updates.resolution.old} to {$updates.resolution.new}
+{if $updates.status}Status changed from '{$updates.status.old}' to '{$updates.status.new}'
+{/if}{if $updates.resolution && $updates.resolution.old}Resolution changed from '{$updates.resolution.old}' to '{$updates.resolution.new}'{elseif $updates.resolution}Resolution set to '{$updates.resolution.new}'
 {/if}{if $updates.assign}Bug was reassigned to {$updates.assign.new} (was {$updates.assign.old})
 {/if}{if $updates.title}Title updated - was "{$updates.title.old}"
-{/if}-----{/if}
+{/if}-----
+{/if}
 
 {$bug_note.note}
 

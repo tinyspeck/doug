@@ -136,6 +136,7 @@
 
 		if ($_POST['use-resolution']) {
 			$notify_changes['resolution'] = array('old' => $bug['resolution'], 'new' => $_POST['value-resolution']);
+			if (!$bug['resolution'])
 			local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution'); 
 		}
 		
