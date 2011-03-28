@@ -140,7 +140,7 @@
 		}
 		
 		if ($_POST['use-assign'] ) {
-			$notify_changes['assign'] = array('old' => $bug['assign'], 'new' => $_POST['value-assign']);
+			$notify_changes['assign'] = array('old' => $bug['assigned_user'], 'new' => $_POST['value-assign']);
 			local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign');
 		}
 		
