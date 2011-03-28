@@ -74,7 +74,8 @@
 	function search_db_escape_terms($terms){
 		$out = array();
 		foreach($terms as $term){
-			$out[] = '[[:<:]]'.AddSlashes(search_escape_rlike($term)).'[[:>:]]';
+			#$out[] = '[[:<:]]'.AddSlashes(search_escape_rlike($term)).'[[:>:]]';
+			$out[] = '[[:<:]]'.AddSlashes(search_escape_rlike($term));
 		}
 		return $out;
 	}
