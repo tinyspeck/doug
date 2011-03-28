@@ -127,13 +127,29 @@
 
 	if ($_POST[done]){
 
-		if ($_POST['use-status']	){ 
+		$notify_changes = array();
+
+		if ($_POST['use-status']) {
+			$notify_changes['status'] = array('old' => $bug['status'], 'new' => $_POST['value-status']);
 			local_set_bug_prop('status', $_POST['value-status'], 'status');
 		}
 
-		if ($_POST['use-resolution']	){ local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution'); }
-		if ($_POST['use-assign'] 	){ local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign'); }
-		if ($_POST['use-title']		){ local_set_bug_prop('title',		$_POST['value-title'],		'title'); }
+		if ($_POST['use-resolution']) {
+			$notify_changes['resolution'] = array('old' => $bug['resolution'], 'new' => $_POST['value-resolution']);
+			local_set_bug_prop('resolution',	$_POST['value-resolution'],	'resolution'); 
+		}
+		
+		if ($_POST['use-assign'] ) {
+			$notify_changes['assign'] = array('old' => $bug['assign'], 'new' => $_POST['value-assign']);
+			local_set_bug_prop('assigned_user',	$_POST['value-assign'],		'assign');
+		}
+		
+		if ($_POST['use-title']) {
+			$notify_changes['title'] = array('old' => $bug['title'], 'new' => $_POST['value-title']);
+			local_set_bug_prop('title',		$_POST['value-title'],		'title');
+		}
+
+		$smarty->assign('updates',$notify_changes);
 
 		$attach = get_attachement();
 
