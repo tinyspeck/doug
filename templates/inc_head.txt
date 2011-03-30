@@ -120,6 +120,13 @@ a.sekrit:hover {
 	text-decoration: underline;
 }
 
+.statstable td {
+	padding: 4px;
+	font-size: 16px;
+	background-color: #fff;
+	text-align: right;
+}
+
 .listtable {
 	border-collapse: collapse;
 	border-spacing: 0px;
@@ -130,6 +137,15 @@ a.sekrit:hover {
 	color: #fff;
 	border-right: 1px solid #fff;
 	padding: 4px;
+}
+
+.listtable .h {
+	background-color: {/literal}{$bgcol}{literal};
+	color: #fff;
+	border-right: 1px solid #fff;
+	padding: 4px;
+	font-weight: bold;
+	text-align: center;
 }
 
 .listtable td {
@@ -238,7 +254,9 @@ include('/usr/local/wwwIncludes/nav.txt');
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">Opened By Me</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}stats.php">Stats</a>
+	<a href="{$cfg.root_url}stats.php">Daily Stats</a>
+	&nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="{$cfg.root_url}stats_alltime.php">Alltime Stats</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}create.php">Create</a>
 {/if}

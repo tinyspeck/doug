@@ -1,5 +1,10 @@
 RewriteEngine on
 
-RewriteRule	^(\d+)/?$	bug.php?id=$1	[L,QSA]
-RewriteRule ^users/(.+)?$ user.php?id=$1	[L,QSA]
+RewriteRule ^(\d+)/?$				bug.php?id=$1			[L,QSA]
+RewriteRule ^users/(.+)?$ 			user.php?id=$1			[L,QSA]
 
+RewriteRule ^stats_alltime/?$			stats_alltime.php 		[L]
+RewriteRule ^stats/(\d{4})/(\d{2})/(\d{2})/?$	stats.php?date=$1-$2-$3 	[L]
+RewriteRule ^stats/archive/(\d{4})/?(\d{2})?/?$ stats_archive.php?y=$1&m=$2 	[L,QSA]
+RewriteRule ^stats/archive/?$			stats_archive.php		[L]
+RewriteRule ^stats/?$				stats.php			[L]

@@ -8,10 +8,10 @@
 	#################################################################
 
 	function db_connect() {
-		$GLOBALS[cfg][db_conn] = mysql_connect($GLOBALS[cfg][db_host], $GLOBALS[cfg][db_user], $GLOBALS[cfg][db_pass]);
+		$GLOBALS['cfg']['db_conn'] = mysql_connect($GLOBALS['cfg']['db_host'], $GLOBALS['cfg']['db_user'], $GLOBALS['cfg']['db_pass']);
 
-		if ($GLOBALS[cfg][db_conn]) {
-			mysql_select_db($GLOBALS[cfg][db_name], $GLOBALS[cfg][db_conn]);	
+		if ($GLOBALS['cfg']['db_conn']) {
+			mysql_select_db($GLOBALS['cfg']['db_name'], $GLOBALS['cfg']['db_conn']);	
 			return 1;
 		}
 
@@ -22,11 +22,11 @@
 
 	function db_query($qstring) {
 
-		if ($_GET[debugsql]){
+		if (array_key_exists('debugsql',$_GET)){
 			echo "QUERY: ".HtmlSpecialChars($qstring)."<br />\n";
 		}
 
-		$result = mysql_query($qstring, $GLOBALS[cfg][db_conn]);
+		$result = mysql_query($qstring, $GLOBALS['cfg']['db_conn']);
 
 		if (!$result) {
 			echo "<p>".db_errorno().' : '.db_error()."</p>";
@@ -38,17 +38,17 @@
 	#################################################################
 
 	function db_insertid() {
-		return mysql_insert_id($GLOBALS[cfg][db_conn]);
+		return mysql_insert_id($GLOBALS['cfg']['db_conn']);
 	}
 
 	#################################################################
 
 	function db_error() {
-		return mysql_error($GLOBALS[cfg][db_conn]);
+		return mysql_error($GLOBALS['cfg']['db_conn']);
 	}
 
 	function db_errorno() {
-		return mysql_errno($GLOBALS[cfg][db_conn]);
+		return mysql_errno($GLOBALS['cfg']['db_conn']);
 	}
 
 	#################################################################

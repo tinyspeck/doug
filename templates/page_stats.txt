@@ -1,91 +1,140 @@
-{include file='inc_head.txt' title="Stats"}
+{capture assign='title'}Daily Stats for {$stats.time.human}{/capture}
+{include file='inc_head.txt' title=$title}
 
-<table><tr valign="top"><td>
+<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$stats.time.y}/">{$stats.time.y}</a> > <a href="/stats/archive/{$stats.time.y}/{$stats.time.m}/">{$stats.time.m}</a> > {$stats.time.d}</p>
 
-<h2>Open bugs, by assignee</h2>
+<table class="statstable">
+	{if $stats.counts.open}<tr><td>Total bugs open:</td><td>{$stats.counts.open}</td></tr>{/if}
+	<tr><td>Change today:</td><td style="color:{if $stats.counts.delta > 0}#F00{elseif $stats.counts.delta <0}#381{else}#000{/if}"><b>{if $stats.counts.delta > 0}+{/if}{$stats.counts.delta}</b></td></tr>
+	{if $stats.counts.stale}<tr><td>Stale bugs:</td><td>{$stats.counts.stale}</td></tr>{/if}
+</table>
+<hr/>
+<h2>Making Work... ({$stats.counts.makework})</h2>
 
-<p>These need fixing and then resolving</p>
+<h3>{$stats.counts.opened} bug{if $stats.counts.opened != 1}s{/if} opened today</h3>
 
-<table class="listtable">
+<table class="listtable" width="100%">
+{if $stats.counts.opened}
 	<tr>
-		<th>User</th>
-		<th>Bugs</th>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
 	</tr>
-{foreach from=$open_bugs item='row'}
+{foreach from=$stats.bugs.opened item='row'}
 	<tr class="{cycle values='list1,list2'}">
-		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
 	</tr>
 {/foreach}
-</table>
+{/if}
+<tr><td colspan="4"><br/>
+<h3>{$stats.counts.reopened} bug{if $stats.counts.reopened != 1}s{/if} reopened today</h3>
 
-</td><td>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-</td><td>
-
-<h2>Resolved bugs, by reporter</h2>
-
-<p>These need verifying and then closing</p>
-
-<table class="listtable">
+{if $stats.counts.reopened}
+</td></tr>
 	<tr>
-		<th>User</th>
-		<th>Bugs</th>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
 	</tr>
-{foreach from=$reso_bugs item='row'}
+{foreach from=$stats.bugs.reopened item='row'}
 	<tr class="{cycle values='list1,list2'}">
-		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
 	</tr>
 {/foreach}
-</table>
+{/if}
+<tr><td colspan="4">
+<hr/>
+<h2>Doing Work... ({$stats.counts.dowork})</h2>
 
-</td></tr></table>
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<table><tr valign="top"><td>
-
-<h2>Fixed bugs, by asignee</h2>
-
-<p>These people are working hard!</p>
-
-<table class="listtable">
+<h3>{$stats.counts.resolved} bug{if $stats.counts.resolved != 1}s{/if} resolved today</h3>
+</td></tr>
+{if $stats.counts.resolved}
 	<tr>
-		<th>User</th>
-		<th>Bugs</th>
+		<td class="h">ID</td>
+		<td class="h">Assigned</td>
+		<td class="h">Reported By</td>
+		<td class="h">Title</td>
 	</tr>
-{foreach from=$fixs_bugs item='row'}
+{foreach from=$stats.bugs.resolved item='row'}
 	<tr class="{cycle values='list1,list2'}">
-		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
 	</tr>
 {/foreach}
-</table>
-
-
-</td><td>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-</td><td>
-
-<h2>Created bugs, by reporter</h2>
-
-<p>These people are complaining the most</p>
-
-<table class="listtable">
+{/if}
+<tr><td colspan="4"><br/>
+	
+<h3>{$stats.counts.closed} bug{if $stats.counts.closed != 1}s{/if} closed today</h3>
+</td></tr>
+{if $stats.counts.closed}
 	<tr>
-		<th>User</th>
-		<th>Bugs</th>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
 	</tr>
-{foreach from=$file_bugs item='row'}
+{foreach from=$stats.bugs.closed item='row'}
 	<tr class="{cycle values='list1,list2'}">
-		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
 	</tr>
 {/foreach}
-</table>
+{/if}
+<tr><td colspan="4"><br/>
+<h3>{$stats.counts.resolved_closed} bug{if $stats.counts.resolved_closed != 1}s{/if} resolved <em>and</em> closed today</h3>
+</td></tr>
+{if $stats.counts.resolved_closed}
+	<tr>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
+	</tr>
+{foreach from=$stats.bugs.resolved_closed item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
+	</tr>
+{/foreach}
+{/if}
+<tr><td colspan="4"><br/>
+<hr/>
+<h2>Work in Progress...</h2>
 
-</td></tr></table>
+<h3>{$stats.counts.active} bug{if $stats.counts.active != 1}s{/if} with activity today</h3>
+</td></tr>
+{if $stats.counts.active}
+
+
+	<tr>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
+	</tr>
+{foreach from=$stats.bugs.active item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
+	</tr>
+{/foreach}
+{/if}
+</table>
 
 {include file='inc_foot.txt'}
