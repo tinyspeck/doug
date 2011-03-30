@@ -275,8 +275,10 @@
 		$bugs = array();
 		foreach(array('opened','reopened','closed','resolved','resolved_closed','active') as $key){
 			$bugs[$key] = array();
-			foreach ($bug_ids[$key] as $id){
-				$bugs[$key][] = bugs_fetch($id);
+			if (is_array($bug_ids[$key])){
+				foreach ($bug_ids[$key] as $id){
+					$bugs[$key][] = bugs_fetch($id);
+				}
 			}
 		}
 		return $bugs;
