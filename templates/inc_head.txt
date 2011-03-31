@@ -39,6 +39,14 @@ h1 {
 	text-decoration: underline;
 }
 
+#breadcrumbs {
+	padding:1px;
+	padding-left:8px;
+	font-weight: bold;
+	margin-top: 4px;
+}
+
+
 p {
 	margin-top: 0;
 	margin-bottom: 1em;
@@ -270,6 +278,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 <div id="breadcrumbs">
 {$breadcrumbs}
 </div>
+{/if}
 
 <div id="body">
 
