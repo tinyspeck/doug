@@ -1,0 +1,71 @@
+{capture assign='title'}Stats - Archives{if $title_date} for {$title_date}{/if}{/capture}
+{include file='inc_head.txt' title=$title}
+
+{if $days}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a> > {$month}</p>
+{elseif $months}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a></p>
+{/if}
+
+{if $days}
+<table class="listtable">
+	<tr>
+		<th>Date</th>
+		<th>Active</th>
+		<th>Opened</th>
+		<th>Reopened</th>
+		<th>Resolved</th>
+		<th>Closed</th>
+		<th>Resolved &amp; Closed</th>
+		<th>Change</th>
+	</tr>
+{foreach from=$days item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td class="r"><a href="/stats/{$row.url}">{$row.date}</a></td>
+		<td class="r">{$row.active}</td>
+		<td class="r">{$row.opened}</td>
+		<td class="r">{$row.reopened}</td>
+		<td class="r">{$row.resolved}</td>
+		<td class="r">{$row.closed}</td>
+		<td class="r">{$row.resolved_closed}</td>
+		<td class="r" style="color:{if $row.delta > 0}#F00{elseif $row.delta < 0}#381{else}#000{/if}"><b>{if $row.delta>0}+{/if}{$row.delta}</b></td>
+	</tr>
+{/foreach}
+</table>
+{elseif $months}
+<table class="listtable">
+	<tr>
+		<th>Month</th>
+		<th>Opened</th>
+		<th>Closed</th>
+		<th>Change</th>
+	</tr>
+{foreach from=$months item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td class="r"><a href="/stats/archive/{$row.url}">{$row.name}</a></td>
+		<td class="r">{$row.opened}</td>
+		<td class="r">{$row.closed}</td>
+		<td class="r" style="color:{if $row.delta > 0}#F00{elseif $row.delta < 0}#381{else}#000{/if}"><b>{if $row.delta>0}+{/if}{$row.delta}</b></td>
+	</tr>
+{/foreach}
+</table>
+{else}
+<table class="listtable">
+	<tr>
+		<th>Year</th>
+		<th>Opened</th>
+		<th>Closed</th>
+		<th>Change</th>
+	</tr>
+	{foreach from=$years item='row'}
+		<tr class="{cycle values='list1,list2'}">
+			<td class="r"><a href="/stats/archive/{$row.year}">{$row.year}</a></td>
+			<td class="r">{$row.opened}</td>
+			<td class="r">{$row.closed}</td>
+			<td class="r" style="color:{if $row.delta > 0}#F00{elseif $row.delta < 0}#381{else}#000{/if}"><b>{if $row.delta>0}+{/if}{$row.delta}</b></td>
+		</tr>
+	{/foreach}
+	</table>
+{/if}
+
+
+
+{include file='inc_foot.txt'}

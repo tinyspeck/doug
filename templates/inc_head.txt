@@ -148,6 +148,10 @@ a.sekrit:hover {
 	text-align: center;
 }
 
+.listtable .r {
+	text-align: right;
+}
+
 .listtable td {
 	padding: 4px;
 }
@@ -254,9 +258,9 @@ include('/usr/local/wwwIncludes/nav.txt');
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">Opened By Me</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}stats.php">Daily Stats</a>
+	<a href="{$cfg.root_url}stats/">Daily Stats</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}stats_alltime.php">Alltime Stats</a>
+	<a href="{$cfg.root_url}stats_alltime/">Alltime Stats</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}create.php">Create</a>
 {/if}

@@ -1,7 +1,7 @@
-{capture assign='title'}Daily Stats for {$stats.time.human}{/capture}
+{capture assign='title'}Stats - Daily for {$stats.time.human}{/capture}
 {include file='inc_head.txt' title=$title}
 
-<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$stats.time.y}/">{$stats.time.y}</a> > <a href="/stats/archive/{$stats.time.y}/{$stats.time.m}/">{$stats.time.m}</a> > {$stats.time.d}</p>
+<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$stats.time.y}/">{$stats.time.y}</a> > <a href="/stats/archive/{$month_url}">{$month}</a> > {$day}</p>
 
 <table class="statstable">
 	{if $stats.counts.open}<tr><td>Total bugs open:</td><td>{$stats.counts.open}</td></tr>{/if}

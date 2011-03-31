@@ -285,4 +285,65 @@
 	}
 
 	#################################################################
+	
+	function stats_get_days_for_month($y,$m){
+		$ret = db_fetch_all("SELECT timestamp, day FROM stats WHERE year='$y' AND month='$m'");
+
+		$days = array();
+
+		foreach ($ret as $row){
+			$data = stats_generate_daily_counts(stats_db_fetch_daily(stats_get_time_window("$y-$m-$row[day]")));
+			$data['date'] = date('D jS',$row['timestamp']);
+			$data['day'] = $row['day'];
+			$data['url'] = sprintf("%d/%02d/%02d",$y,$m,$row['day']);
+			$days[] = $data;
+		}
+		
+		return $days;
+	}
+	
+	#################################################################
+
+	function stats_get_months_for_year($y){
+		$ret = db_fetch_all("SELECT * FROM stats WHERE year='$y'");
+
+		$month_temp = array();
+		$months = array();
+
+		foreach ($ret as $row){
+			$month_temp[$row['month']]['opened'] += count(explode(',',$row['opened']));
+			$month_temp[$row['month']]['closed'] += count(explode(',',$row['closed']));
+		}
+
+		foreach (array_keys($month_temp) as $month){
+			$month_temp[$month]['delta'] = $month_temp[$month]['opened'] - $month_temp[$month]['closed'];
+			$month_temp[$month]['name'] = date('F',strtotime("$y-$month-05 12:00"));
+			$month_temp[$month]['url'] = sprintf("%d/%02d/",$y,$month);
+			$months[] = $month_temp[$month];
+		}
+		
+		return $months;
+	}
+
+	#################################################################
+
+	function stats_get_years(){
+		$ret = db_fetch_all("SELECT * FROM stats");
+		
+		$year_temp = array();
+		$years = array();
+		
+		foreach ($ret as $row){
+			$year_temp[$row['year']]['opened'] += count(explode(',',$row['opened']));
+			$year_temp[$row['year']]['closed'] += count(explode(',',$row['closed']));
+		}
+		
+		foreach (array_keys($year_temp) as $year){
+			$year_temp[$year]['delta'] = $year_temp[$year]['opened'] - $year_temp[$year]['closed'];
+			$year_temp[$year]['year'] = $year;
+			$years[] = $year_temp[$year];
+		}
+		
+		return $years;
+	}
 ?>
