@@ -266,6 +266,11 @@ include('/usr/local/wwwIncludes/nav.txt');
 {/if}
 </div>
 
+{if $breadcrumbs}
+<div id="breadcrumbs">
+{$breadcrumbs}
+</div>
+
 <div id="body">
 
 {if $search}

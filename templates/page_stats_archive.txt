@@ -1,9 +1,12 @@
 {capture assign='title'}Stats - Archives{if $title_date} for {$title_date}{/if}{/capture}
-{include file='inc_head.txt' title=$title}
-
-{if $days}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a> > {$month}</p>
-{elseif $months}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a></p>
+{if $days}
+{capture assign='breadcrumbs'}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a> > {$month}</p>{/capture}
+{elseif $months}
+{capture assign='breadcrumbs'}<p><a href="/stats/archive/">Archive</a> > <a href="/stats/archive/{$smarty.get.y}/">{$smarty.get.y}</a></p>{/capture}
+{else}
+{capture assign='breadcrumbs}Archive{/capture}
 {/if}
+{include file='inc_head.txt' title=$title breadcrumbs=$breadcrumbs}
 
 {if $days}
 <table class="listtable">
