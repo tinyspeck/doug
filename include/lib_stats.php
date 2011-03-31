@@ -312,7 +312,7 @@
 
 		foreach ($ret as $row){
 			$month_temp[$row['month']]['opened'] += count(explode(',',$row['opened']));
-			$month_temp[$row['month']]['closed'] += count(explode(',',$row['closed']));
+			$month_temp[$row['month']]['closed'] += count(explode(',',$row['closed']))+count(explode(',',$row['resolved']))+count(explode(',',$row['resolved_closed']));
 		}
 
 		foreach (array_keys($month_temp) as $month){
@@ -335,7 +335,7 @@
 		
 		foreach ($ret as $row){
 			$year_temp[$row['year']]['opened'] += count(explode(',',$row['opened']));
-			$year_temp[$row['year']]['closed'] += count(explode(',',$row['closed']));
+			$year_temp[$row['year']]['closed'] += count(explode(',',$row['closed']))+count(explode(',',$row['resolved']))+count(explode(',',$row['resolved_closed']));
 		}
 		
 		foreach (array_keys($year_temp) as $year){

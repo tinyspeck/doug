@@ -14,7 +14,7 @@
 {foreach from=$open_bugs item='row'}
 	<tr class="{cycle values='list1,list2'}">
 		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="/?assigned_to={$row.user}&status=open">{$row.num}</td>
 	</tr>
 {/foreach}
 </table>
@@ -35,7 +35,7 @@
 {foreach from=$reso_bugs item='row'}
 	<tr class="{cycle values='list1,list2'}">
 		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="/?opened_by={$row.user}&status=resolved">{$row.num}</a></td>
 	</tr>
 {/foreach}
 </table>
@@ -59,7 +59,7 @@
 {foreach from=$fixs_bugs item='row'}
 	<tr class="{cycle values='list1,list2'}">
 		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="/?assigned_to={$row.user}&status=fixed">{$row.num}</a></td>
 	</tr>
 {/foreach}
 </table>
@@ -81,7 +81,7 @@
 {foreach from=$file_bugs item='row'}
 	<tr class="{cycle values='list1,list2'}">
 		<td>{$row.user}</td>
-		<td>{$row.num}</td>
+		<td><a href="/?opened_by={$row.user}">{$row.num}</td>
 	</tr>
 {/foreach}
 </table>

@@ -213,7 +213,7 @@ a.inline-status-closed {
 	font-weight: bold;
 }
 
-</style>{/literal}
+{/literal}</style>
 <script>{literal}
 
 function get_tr_display(val){
@@ -234,7 +234,7 @@ function showfilter(){
 }
 
 
-</script>{/literal}
+{/literal}</script>
 </head>
 <body>
 
@@ -315,7 +315,8 @@ include('/usr/local/wwwIncludes/nav.txt');
 		<td>Status: </td><td><select name="status" id="select_status">
 			<option value="open"{if $form_status == 'open'} selected{/if}>Open</option>
 			<option value="resolved"{if $form_status == 'resolved'} selected{/if}>Resolved</option>
-			<option value="notclosed"{if $form_status == 'notclosed'} selected{/if}>Open & Resolved</option>
+			<option value="notclosed"{if $form_status == 'notclosed'} selected{/if}>Resolved &amp; Open</option>
+			<option value="fixed"{if $form_status == 'fixed'} selected{/if}>Resolved &amp; Closed</option>
 			<option value="closed"{if $form_status == 'closed'} selected{/if}>Closed</option>
 		</select></td>
 

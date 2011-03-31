@@ -113,6 +113,10 @@
 			$title_status = 'Open and Resolved Issues';
 			$where = "status != 'closed'";
 			$smarty->assign('form_status','notclosed');
+		} elseif ($_GET['status'] == 'fixed'){
+			$title_status = 'Resolved and Closed Issues';
+			$where = "status != 'open'";
+			$smarty->assign('form_status','fixed');
 		} else{
 			$title_status = 'Open Issues';
 			$where = "status = 'open'";
