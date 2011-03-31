@@ -45,6 +45,9 @@
 		}
 	}
 
+	if ($user){
+		$smarty->assign('needs_closing',db_fetch_single("SELECT count(*) AS count FROM bugs WHERE opened_user='$user[name]' AND status='resolved'"));
+	}
 
 	#
 	# constants
@@ -66,7 +69,6 @@
 
 	$smarty->assign('max_attach_bytes', $cfg[max_attach_mb] * 1024 * 1024);
 	$smarty->assign('max_attach_label', "$cfg[max_attach_mb] MB");
-
 
 	function get_attachement(){
 
