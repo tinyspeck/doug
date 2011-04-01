@@ -51,7 +51,7 @@
 {/if}
 <tr><td colspan="4">
 <hr/>
-<h2>Doing Work... ({$stats.counts.dowork})</h2>
+<h2>Doing Work... ({$stats.counts.dowork}) <span style="color: #bbb">(+ {$stats.counts.closed} closed = {$stats.counts.dowork_all})</span></h2>
 
 <h3>{$stats.counts.resolved} bug{if $stats.counts.resolved != 1}s{/if} resolved today</h3>
 </td></tr>
@@ -72,6 +72,25 @@
 {/foreach}
 {/if}
 <tr><td colspan="4"><br/>
+<h3>{$stats.counts.resolved_closed} bug{if $stats.counts.resolved_closed != 1}s{/if} resolved <em>and</em> closed today</h3>
+</td></tr>
+{if $stats.counts.resolved_closed}
+	<tr>
+		<td class="h">ID</th>
+		<td class="h">Assigned</th>
+		<td class="h">Reported By</th>
+		<td class="h">Title</th>
+	</tr>
+{foreach from=$stats.bugs.resolved_closed item='row'}
+	<tr class="{cycle values='list1,list2'}">
+		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
+		<td>{$row.assigned_user}</td>
+		<td>{$row.opened_user}</td>
+		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
+	</tr>
+{/foreach}
+{/if}
+<tr><td colspan="4"><br/>
 	
 <h3>{$stats.counts.closed} bug{if $stats.counts.closed != 1}s{/if} closed today</h3>
 </td></tr>
@@ -83,25 +102,6 @@
 		<td class="h">Title</th>
 	</tr>
 {foreach from=$stats.bugs.closed item='row'}
-	<tr class="{cycle values='list1,list2'}">
-		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
-		<td>{$row.assigned_user}</td>
-		<td>{$row.opened_user}</td>
-		<td><a href="{$cfg.root_url}{$row.id}" class="sekrit status-{$row.status}">{$row.title|escape}</a></td>
-	</tr>
-{/foreach}
-{/if}
-<tr><td colspan="4"><br/>
-<h3>{$stats.counts.resolved_closed} bug{if $stats.counts.resolved_closed != 1}s{/if} resolved <em>and</em> closed today</h3>
-</td></tr>
-{if $stats.counts.resolved_closed}
-	<tr>
-		<td class="h">ID</th>
-		<td class="h">Assigned</th>
-		<td class="h">Reported By</th>
-		<td class="h">Title</th>
-	</tr>
-{foreach from=$stats.bugs.resolved_closed item='row'}
 	<tr class="{cycle values='list1,list2'}">
 		<td><a href="{$cfg.root_url}{$row.id}">{$row.id}</a></td>
 		<td>{$row.assigned_user}</td>

@@ -266,7 +266,7 @@ include('/usr/local/wwwIncludes/nav.txt');
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}?opened_by={$user.name|escape}">Opened By Me</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="{$cfg.root_url}?opened_by={$user.name|escape}&status=resolved">Need To Be Closed By Me{if $needs_closing.count} ({$needs_closing.count}){/if}</a>
+	<a href="{$cfg.root_url}?opened_by={$user.name|escape}&status=resolved">Need To Be Closed By Me{if $needs_closing} ({$needs_closing}){else} (0){/if}</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;
 	<a href="{$cfg.root_url}stats/">Daily Stats</a>
 	&nbsp;&nbsp;|&nbsp;&nbsp;

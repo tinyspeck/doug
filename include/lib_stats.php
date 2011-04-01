@@ -209,7 +209,10 @@
 		}
 
 		$counts['makework'] = $counts['opened']+$counts['reopened'];
-		$counts['dowork'] = $counts['closed']+$counts['resolved']+$counts['resolved_closed'];
+		
+		$counts['dowork'] = $counts['resolved']+$counts['resolved_closed'];
+		
+		$counts['dowork_all'] = $counts['closed']+$counts['resolved']+$counts['resolved_closed'];
 
 		$counts['delta'] = $counts['makework'] - $counts['dowork'];
 
